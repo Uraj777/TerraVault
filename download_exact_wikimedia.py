@@ -10,7 +10,13 @@ file_titles = {
     'indonesia-tsunami.jpg': 'Aceh 2004 tsunami standing mosque USGS.jpg',
     'antarctica.jpg': 'AmundsenScottSuedpolStation.jpg',
     'blackhole.jpg': 'Black hole - Messier 87.jpg',
-    'bigbang.jpg': 'CMB Timeline300 no WMAP.jpg'
+    'bigbang.jpg': 'CMB Timeline300 no WMAP.jpg',
+    'gobekli-tepe.jpg': 'Göbeklitepe.jpg',
+    'teotihuacan.jpg': 'Sun Pyramid 05 2015 Teotihuacan 3304.JPG',
+    'tunguska.jpg': 'Tunguska Ereignis-1.jpg',
+    'vesuvius.jpg': 'Aerial image of Pompeii and Mount Vesuvius (view from the southeast).jpg',
+    'wow-signal.jpg': 'Wow signal.jpg',
+    'oumuamua.jpg': "Artist's impression of \u02bbOumuamua.jpg"
 }
 
 static_dir = 'static'

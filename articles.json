@@ -162,5 +162,53 @@
     "summary": "A mysterious region where ships and planes have reportedly vanished.",
     "slug": "bermuda-triangle",
     "content": "Full content for Bermuda Triangle will go here."
+  },
+  {
+    "title": "Göbekli Tepe",
+    "category": "myths",
+    "img": "gobekli-tepe.jpg",
+    "summary": "The world's oldest known temple site, rewriting the history of human prehistory.",
+    "slug": "gobekli-tepe",
+    "content": "Full content for Göbekli Tepe will go here."
+  },
+  {
+    "title": "Teotihuacan",
+    "category": "myths",
+    "img": "teotihuacan.jpg",
+    "summary": "The mysterious Mesoamerican city of the Pyramids of the Sun and Moon.",
+    "slug": "teotihuacan",
+    "content": "Full content for Teotihuacan will go here."
+  },
+  {
+    "title": "Tunguska Event",
+    "category": "disasters",
+    "img": "tunguska.jpg",
+    "summary": "A massive 1908 explosion that flattened 80 million trees in Siberia.",
+    "slug": "tunguska",
+    "content": "Full content for Tunguska will go here."
+  },
+  {
+    "title": "Mount Vesuvius Eruption",
+    "category": "disasters",
+    "img": "vesuvius.jpg",
+    "summary": "The volcanic cataclysm of 79 AD that buried Pompeii and Herculaneum.",
+    "slug": "vesuvius-pompeii",
+    "content": "Full content for Mount Vesuvius will go here."
+  },
+  {
+    "title": "The Wow! Signal",
+    "category": "cosmos",
+    "img": "wow-signal.jpg",
+    "summary": "A strong SETI radio signal detected in 1977, bearing extraterrestrial hallmarks.",
+    "slug": "wow-signal",
+    "content": "Full content for The Wow! Signal will go here."
+  },
+  {
+    "title": "ʻOumuamua",
+    "category": "cosmos",
+    "img": "oumuamua.jpg",
+    "summary": "The first confirmed interstellar object detected traveling through our Solar System.",
+    "slug": "oumuamua",
+    "content": "Full content for Oumuamua will go here."
   }
 ]

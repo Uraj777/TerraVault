@@ -28,7 +28,7 @@ jobs:
     - name: Run App Factory Sanity Check
       env:
         SECRET_KEY: ci_secret_key_placeholder
-        DATABASE_URL: sqlite:///:memory:
+        DATABASE_URL: 'sqlite:///:memory:'
         FLASK_ENV: testing
       run: |
         python -c "from app import create_app; app = create_app('testing'); print('Flask App Factory loaded successfully!')"

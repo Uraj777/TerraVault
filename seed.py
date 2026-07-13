@@ -121,6 +121,60 @@ RICH_CONTENT = {
             <li>Methane hydrate releases from the ocean floor, lowering water density and sinking ships</li>
             <li>Compass variations due to magnetic anomalies</li>
         </ul>
+    """,
+    "gobekli-tepe": """
+        <p>Göbekli Tepe is an archaeological site in the Southeastern Anatolia Region of Turkey, dating back to the Pre-Pottery Neolithic period, approximately 9500 to 8000 BC.</p>
+        
+        <h2>Discovery and Excavation</h2>
+        <p>First noted in a survey in 1963, the site was recognized for its true significance in 1994 by German archaeologist Klaus Schmidt. Excavations revealed massive circular stone enclosures featuring T-shaped limestone pillars carved with reliefs of wild animals.</p>
+        
+        <h2>Historical Significance</h2>
+        <p>Dating to the 10th millennium BC, Göbekli Tepe is considered the world's oldest known megalithic structure. Its construction predates the development of agriculture, pottery, and metallurgy, challenging traditional theories that agriculture was a prerequisite for complex societies.</p>
+    """,
+    "teotihuacan": """
+        <p>Teotihuacan is an ancient Mesoamerican city located in a sub-valley of the Valley of Mexico, known today as the site of many of the most architecturally significant Mesoamerican pyramids built in the pre-Columbian Americas.</p>
+        
+        <h2>Urban Planning and Pyramids</h2>
+        <p>At its peak in the first half of the 1st millennium AD, Teotihuacan was the largest city in the pre-Columbian Americas, with a population estimated at 125,000 or more. The city's main axis is the Avenue of the Dead, flanked by the massive Pyramid of the Sun and Pyramid of the Moon.</p>
+        
+        <h2>Mysterious Collapse</h2>
+        <p>The city was sacked and burned around 550 AD, and its builders left no written records. The Aztecs discovered the city centuries later, naming it Teotihuacan ("the place where the gods were created") in awe of its monumental architecture.</p>
+    """,
+    "tunguska": """
+        <p>The Tunguska event was a massive explosion that occurred on June 30, 1908, near the Podkamennaya Tunguska River in Yeniseysk Governorate, Russia.</p>
+        
+        <h2>The Explosion and Damage</h2>
+        <p>The explosion flattened an estimated 80 million trees over an area of 2,150 square kilometers (830 sq mi) of taiga forest. The energy of the blast is estimated to have been equivalent to 10 to 15 megatons of TNT—roughly 1,000 times more powerful than the atomic bomb dropped on Hiroshima.</p>
+        
+        <h2>Scientific Theories</h2>
+        <p>Since the explosion occurred in a remote region, no expedition reached the site until Leonid Kulik's team in 1927. The lack of an impact crater led scientists to conclude that the blast was caused by the airburst of a stony meteoroid or comet approximately 50 to 100 meters in diameter.</p>
+    """,
+    "vesuvius-pompeii": """
+        <p>The eruption of Mount Vesuvius in 79 AD was one of the most famous and catastrophic volcanic eruptions in European history, burying the Roman cities of Pompeii, Herculaneum, Oplontis, and Stabiae under meters of ash and pumice.</p>
+        
+        <h2>Cataclysm of 79 AD</h2>
+        <p>The eruption was described in vivid detail by Pliny the Younger, who witnessed the event from across the Bay of Naples. Vesuvius erupted a giant cloud of ash, rock, and volcanic gases, followed by lethal pyroclastic flows that swept through the cities at hundreds of miles per hour.</p>
+        
+        <h2>Archaeological Discovery</h2>
+        <p>Forgotten for over 1,500 years, the ruins of Pompeii were rediscovered in the 18th century. The ash layers perfectly preserved the buildings, wall paintings, and even hollow spaces left by decayed bodies, which archaeologists filled with plaster to create haunting casts of the victims.</p>
+    """,
+    "wow-signal": """
+        <p>The Wow! signal was a strong narrowband radio signal detected by Jerry R. Ehman on August 15, 1977, while working on a SETI project at the Big Ear radio telescope of Ohio State University.</p>
+        
+        <h2>The "6EQUJ5" Code</h2>
+        <p>The signal bore the expected hallmarks of non-terrestrial and non-solar system origin. Amazed at how closely the signal matched the expected signature of an interstellar signal, Ehman circled the anomaly on the computer printout and wrote the comment "Wow!" in the margin.</p>
+        
+        <h2>Unsolved Anomaly</h2>
+        <p>Despite numerous attempts to locate the signal again, it was never detected. The frequency of the signal was 1420.405 MHz, which corresponds to the hydrogen line (the astronomical frequency favored by searchers for extraterrestrial intelligence).</p>
+    """,
+    "oumuamua": """
+        <p>'Oumuamua is the first confirmed interstellar object detected passing through our Solar System, discovered by Robert Weryk using the Pan-STARRS telescope on October 19, 2017.</p>
+        
+        <h2>Anomalous Trajectory and Shape</h2>
+        <p>'Oumuamua exhibited a non-gravitational acceleration as it left the solar system, which could not be explained by solar gravity alone. It is highly elongated, roughly ten times as long as it is wide, resembling a cigar-shaped object traveling at high speed.</p>
+        
+        <h2>Scientific Debates</h2>
+        <p>The object's unusual shape, lack of visible outgassing (cometary tail), and subtle acceleration sparked intense scientific debate, with theories ranging from a hydrogen iceberg or nitrogen ice fragment to a solar sail of artificial origin.</p>
     """
 }
 
