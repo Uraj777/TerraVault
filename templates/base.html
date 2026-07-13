@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="light">
+<html lang="en" data-bs-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,10 +11,10 @@
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   
-  <!-- Google Fonts: Inter -->
+  <!-- Google Fonts: Space Grotesk (headers), Manrope (body), Inter (UI) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <!-- SEO & Open Graph Meta Tags -->
   <meta name="description" content="{% block meta_description %}Explore professionally curated articles, historical disasters, myths, and environmental changes on TerraVault.{% endblock %}" />
@@ -24,85 +24,11 @@
   <meta property="og:url" content="{{ request.url }}" />
   <meta property="og:image" content="{% block og_image %}{{ url_for('static', filename='rocket.png') }}{% endblock %}" />
   
-  <!-- Custom Styles -->
-  <style>
-    :root {
-      --tv-primary: #10a359;
-      --tv-primary-hover: #0ea557;
-      --font-family-sans-serif: 'Inter', system-ui, -apple-system, sans-serif;
-    }
-    
-    body {
-      font-family: var(--font-family-sans-serif);
-      transition: background-color 0.3s, color 0.3s;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      background-color: #f8f9fa;
-    }
-    
-    [data-bs-theme="dark"] body {
-      background-color: #121212;
-    }
-    
-    /* Premium Glassmorphic Navbar */
-    .glass-nav {
-      background: rgba(255, 255, 255, 0.8) !important;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    }
-    
-    [data-bs-theme="dark"] .glass-nav {
-      background: rgba(18, 18, 18, 0.8) !important;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    }
-    
-    .navbar-brand {
-      font-weight: 800;
-      font-size: 1.45rem;
-      letter-spacing: -0.5px;
-      color: var(--tv-primary) !important;
-    }
-    
-    .btn-primary {
-      background-color: var(--tv-primary);
-      border-color: var(--tv-primary);
-    }
-    
-    .btn-primary:hover {
-      background-color: var(--tv-primary-hover);
-      border-color: var(--tv-primary-hover);
-    }
-    
-    /* Cards styling */
-    .tv-card {
-      border-radius: 12px;
-      overflow: hidden;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      border: 1px solid rgba(0,0,0,0.06);
-    }
-    
-    [data-bs-theme="dark"] .tv-card {
-      border-color: rgba(255, 255, 255, 0.05);
-    }
-    
-    .tv-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
-    }
-    
-    footer {
-      margin-top: auto;
-      background-color: #f1f3f5;
-      border-top: 1px solid rgba(0,0,0,0.05);
-    }
-    
-    [data-bs-theme="dark"] footer {
-      background-color: #1a1a1a;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-    }
-  </style>
+  <!-- Modern Premium Styling System -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}" />
+  
+  {% block extra_css %}{% endblock %}
+</head>
   
   {% block extra_css %}{% endblock %}
 </head>
@@ -235,14 +161,12 @@
 
   <!-- Dark Mode Script -->
   <script>
-    // Check initial preferences
+    // Check initial preferences (Default to Dark Mode first)
     const storedTheme = localStorage.getItem('theme');
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    
-    if (storedTheme === 'dark' || (!storedTheme && systemPrefersDark)) {
-      setTheme('dark');
-    } else {
+    if (storedTheme === 'light') {
       setTheme('light');
+    } else {
+      setTheme('dark');
     }
 
     function toggleDarkMode() {

@@ -4,18 +4,29 @@
 
 {% block content %}
 <!-- Hero Section -->
-<div class="bg-primary text-white py-5 mb-5 shadow-sm" style="background: linear-gradient(135deg, #10a359 0%, #0c8748 100%);">
-  <div class="container py-4 text-center">
-    <h1 class="display-4 fw-extrabold mb-3">Welcome to TerraVault</h1>
-    <p class="lead fs-4 opacity-90 mx-auto" style="max-width: 700px;">
-      A community-driven encyclopedia exploring lost civilizations, historical disasters, environmental impacts, and cosmological mysteries.
+<div class="hero-banner text-center position-relative mb-5">
+  <div class="container position-relative" style="z-index: 5;">
+    <h1 class="hero-title display-3 fw-bold mb-3">TerraVault</h1>
+    <p class="lead fs-4 text-secondary mx-auto mb-4" style="max-width: 700px;">
+      Explore Earth's greatest anomalies, historical disasters, lost civilizations, and cosmological horizons.
     </p>
-    {% if not current_user.is_authenticated %}
-      <div class="mt-4">
-        <a href="{{ url_for('auth.register') }}" class="btn btn-light text-success fw-bold px-4 py-2 me-2 shadow-sm">Join the Community</a>
-        <a href="#explore" class="btn btn-outline-light px-4 py-2">Explore Articles</a>
-      </div>
-    {% endif %}
+    
+    <!-- Cinematic Search Bar -->
+    <div class="hero-search-wrapper mb-4">
+      <form action="{{ url_for('main.search') }}" method="get">
+        <input type="text" name="q" class="form-control form-control-lg" placeholder="Search topics, anomalies, and discoveries..." required>
+        <button class="btn btn-success btn-lg" type="submit"><i class="fa-solid fa-magnifying-glass me-1"></i> Explore</button>
+      </form>
+    </div>
+
+    <!-- Popular topics badges -->
+    <div class="d-flex justify-content-center flex-wrap gap-2 mb-3">
+      <span class="small text-muted align-self-center me-2">Trending Searches:</span>
+      <a href="{{ url_for('main.search', q='Atlantis') }}" class="badge bg-success-subtle text-success text-decoration-none">#Atlantis</a>
+      <a href="{{ url_for('main.search', q='Black Holes') }}" class="badge bg-success-subtle text-success text-decoration-none">#BlackHoles</a>
+      <a href="{{ url_for('main.search', q='Chernobyl') }}" class="badge bg-success-subtle text-success text-decoration-none">#Chernobyl</a>
+      <a href="{{ url_for('main.search', q='Volcano') }}" class="badge bg-success-subtle text-success text-decoration-none">#Vesuvius</a>
+    </div>
   </div>
 </div>
 
