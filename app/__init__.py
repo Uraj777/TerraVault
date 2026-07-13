@@ -2,6 +2,9 @@ import os
 import logging
 from logging.handlers import RotatingFileHandler
 from flask import Flask, render_template
+from flask_talisman import Talisman
+from flask_compress import Compress
+from whitenoise import WhiteNoise
 from app.config import config_by_name
 from app.extensions import db, migrate, login_manager, csrf
 
@@ -44,6 +47,50 @@ def create_app(config_name=None):
     
     # Global context processors and custom Jinja filters
     register_context_processors(app)
+    
+    # Custom Content Security Policy supporting Bootstrap 5 and FontAwesome CDNs plus inline scripts
+    csp = {
+        'default-src': [
+            '\'self\'',
+            'https://cdn.jsdelivr.net',
+            'https://cdnjs.cloudflare.com',
+        ],
+        'script-src': [
+            '\'self\'',
+            '\'unsafe-inline\'', # Required for Chart.js & Dark Mode toggler scripts
+            'https://cdn.jsdelivr.net',
+            'https://cdnjs.cloudflare.com',
+        ],
+        'style-src': [
+            '\'self\'',
+            '\'unsafe-inline\'',
+            'https://cdn.jsdelivr.net',
+            'https://cdnjs.cloudflare.com',
+            'https://fonts.googleapis.com',
+        ],
+        'font-src': [
+            '\'self\'',
+            'https://fonts.gstatic.com',
+            'https://cdnjs.cloudflare.com',
+        ],
+        'img-src': [
+            '\'self\'',
+            'data:',
+            'https://images.unsplash.com',
+            'https://upload.wikimedia.org',
+        ]
+    }
+    
+    # Enforce Talisman security headers (HTTP Strict Transport Security, XSS protections, frame guards)
+    # Require HTTPS only if in production mode
+    is_prod = (config_name == 'production' or os.environ.get('FLASK_ENV') == 'production')
+    Talisman(app, content_security_policy=csp, force_https=is_prod)
+    
+    # Enable Gzip and Brotli compression for server responses
+    Compress(app)
+    
+    # Wrap WSGI pipeline with WhiteNoise to serve static assets with far-future caching headers
+    app.wsgi_app = WhiteNoise(app.wsgi_app, root=static_dir, prefix='static/')
     
     return app
 
