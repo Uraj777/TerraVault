@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Access Denied (403){% endblock %}
+
+{% block content %}
+<div class="container my-5 text-center">
+  <div class="py-5">
+    <i class="fa-solid fa-hand-holding-hand text-danger display-1 mb-4"></i>
+    <h1 class="display-4 fw-extrabold text-danger">403 - Access Restrained</h1>
+    <p class="lead text-muted mb-4 mx-auto" style="max-width: 500px;">
+      You do not possess the clearance or role permissions required to access this administrative zone.
+    </p>
+    <a href="{{ url_for('main.home') }}" class="btn btn-outline-danger btn-lg px-4 shadow-sm">
+      <i class="fa-solid fa-house me-2"></i> Return to Homepage
+    </a>
+  </div>
+</div>
+{% endblock %}

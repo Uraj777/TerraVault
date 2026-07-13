@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}Explore Earth's Secrets & Mysteries{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="bg-primary text-white py-5 mb-5 shadow-sm" style="background: linear-gradient(135deg, #10a359 0%, #0c8748 100%);">
+  <div class="container py-4 text-center">
+    <h1 class="display-4 fw-extrabold mb-3">Welcome to TerraVault</h1>
+    <p class="lead fs-4 opacity-90 mx-auto" style="max-width: 700px;">
+      A community-driven encyclopedia exploring lost civilizations, historical disasters, environmental impacts, and cosmological mysteries.
+    </p>
+    {% if not current_user.is_authenticated %}
+      <div class="mt-4">
+        <a href="{{ url_for('auth.register') }}" class="btn btn-light text-success fw-bold px-4 py-2 me-2 shadow-sm">Join the Community</a>
+        <a href="#explore" class="btn btn-outline-light px-4 py-2">Explore Articles</a>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<div class="container" id="explore">
+  <!-- Categories Row -->
+  <div class="row mb-5">
+    <div class="col-12">
+      <h2 class="h3 fw-bold mb-4 d-flex align-items-center">
+        <i class="fa-solid fa-layer-group text-primary me-2"></i> Categories
+      </h2>
+    </div>
+    {% for cat in categories %}
+      <div class="col-lg-4 col-md-6 mb-3">
+        <div class="card h-100 tv-card border-0 shadow-sm p-3">
+          <div class="card-body">
+            <h3 class="h5 fw-bold card-title">
+              <a href="{{ url_for('main.category', slug=cat.slug) }}" class="text-decoration-none text-success">
+                {{ cat.name }}
+              </a>
+            </h3>
+            <p class="card-text text-muted small">{{ cat.description }}</p>
+            <a href="{{ url_for('main.category', slug=cat.slug) }}" class="btn btn-sm btn-link text-success p-0">
+              Browse Category <i class="fa-solid fa-arrow-right-long ms-1"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <!-- Featured Articles -->
+  {% if featured %}
+    <div class="row mb-5">
+      <div class="col-12">
+        <h2 class="h3 fw-bold mb-4 d-flex align-items-center">
+          <i class="fa-solid fa-star text-warning me-2"></i> Featured Spotlights
+        </h2>
+      </div>
+      {% for art in featured %}
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="card h-100 tv-card shadow-sm">
+            <div class="position-relative">
+              {% if art.image_url.startswith('uploaded_') %}
+                <img src="{{ url_for('static', filename='uploads/' + art.image_url) }}" class="card-img-top" alt="{{ art.title }}" style="height: 200px; object-fit: cover;">
+              {% else %}
+                <img src="{{ url_for('static', filename=art.image_url) }}" class="card-img-top" alt="{{ art.title }}" style="height: 200px; object-fit: cover;">
+              {% endif %}
+              <span class="position-absolute top-0 end-0 bg-warning text-dark px-3 py-1 m-2 fw-bold text-uppercase fs-6 rounded shadow-sm">
+                Featured
+              </span>
+            </div>
+            <div class="card-body d-flex flex-column">
+              <span class="badge bg-success-subtle text-success align-self-start mb-2">{{ art.category.name }}</span>
+              <h3 class="h5 fw-bold card-title">{{ art.title }}</h3>
+              <p class="card-text text-muted small flex-grow-1">{{ art.summary }}</p>
+              <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+                <span class="text-muted small"><i class="fa-regular fa-clock me-1"></i> {{ art.reading_time }} min read</span>
+                <a href="{{ url_for('wiki.article_view', slug=art.slug) }}" class="btn btn-sm btn-outline-success">Read Article</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <!-- Recent Articles -->
+  <div class="row mb-5">
+    <div class="col-12">
+      <h2 class="h3 fw-bold mb-4 d-flex align-items-center">
+        <i class="fa-solid fa-clock text-info me-2"></i> Recently Published
+      </h2>
+    </div>
+    {% for art in recent %}
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100 tv-card shadow-sm">
+          {% if art.image_url.startswith('uploaded_') %}
+            <img src="{{ url_for('static', filename='uploads/' + art.image_url) }}" class="card-img-top" alt="{{ art.title }}" style="height: 180px; object-fit: cover;">
+          {% else %}
+            <img src="{{ url_for('static', filename=art.image_url) }}" class="card-img-top" alt="{{ art.title }}" style="height: 180px; object-fit: cover;">
+          {% endif %}
+          <div class="card-body d-flex flex-column">
+            <span class="badge bg-secondary-subtle text-secondary align-self-start mb-2">{{ art.category.name }}</span>
+            <h3 class="h5 fw-bold card-title">{{ art.title }}</h3>
+            <p class="card-text text-muted small flex-grow-1">{{ art.summary }}</p>
+            <div class="d-flex justify-content-between align-items-center mt-3 pt-3 border-top">
+              <span class="text-muted small"><i class="fa-regular fa-eye me-1"></i> {{ art.views }} views</span>
+              <a href="{{ url_for('wiki.article_view', slug=art.slug) }}" class="btn btn-sm btn-outline-success">Read Article</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% else %}
+      <div class="col-12">
+        <div class="text-center py-5 text-muted">
+          <i class="fa-solid fa-folder-open fs-1 mb-3"></i>
+          <p>No articles found. Please run the database seeder.</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

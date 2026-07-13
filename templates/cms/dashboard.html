@@ -1,0 +1,229 @@
+{% extends "base.html" %}
+
+{% block title %}CMS Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="row align-items-center mb-4">
+    <div class="col-md-6">
+      <h1 class="h2 fw-bold text-success m-0"><i class="fa-solid fa-toolbox me-2"></i> CMS Control Panel</h1>
+      <p class="text-muted m-0">Oversee encyclopedic publications, drafts, categories, and traffic metrics.</p>
+    </div>
+    <div class="col-md-6 text-md-end mt-3 mt-md-0">
+      <a href="{{ url_for('cms.create_article') }}" class="btn btn-success me-2">
+        <i class="fa-solid fa-plus me-1"></i> New Article
+      </a>
+      <a href="{{ url_for('cms.categories') }}" class="btn btn-outline-success">
+        <i class="fa-solid fa-folder-tree me-1"></i> Manage Categories
+      </a>
+    </div>
+  </div>
+
+  <!-- Analytics KPI Cards -->
+  <div class="row mb-5">
+    <div class="col-lg-3 col-md-6 mb-3">
+      <div class="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
+        <div class="d-flex align-items-center">
+          <div class="bg-success-subtle text-success p-3 rounded-3 me-3 fs-3">
+            <i class="fa-regular fa-newspaper"></i>
+          </div>
+          <div>
+            <div class="fw-bold fs-4">{{ stats.total_articles }}</div>
+            <div class="text-muted small text-uppercase">Total Articles</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-lg-3 col-md-6 mb-3">
+      <div class="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
+        <div class="d-flex align-items-center">
+          <div class="bg-info-subtle text-info p-3 rounded-3 me-3 fs-3">
+            <i class="fa-regular fa-eye"></i>
+          </div>
+          <div>
+            <div class="fw-bold fs-4">{{ stats.total_views }}</div>
+            <div class="text-muted small text-uppercase">Page Views</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6 mb-3">
+      <div class="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
+        <div class="d-flex align-items-center">
+          <div class="bg-warning-subtle text-warning p-3 rounded-3 me-3 fs-3">
+            <i class="fa-regular fa-folder-open"></i>
+          </div>
+          <div>
+            <div class="fw-bold fs-4">{{ stats.total_categories }}</div>
+            <div class="text-muted small text-uppercase">Categories</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6 mb-3">
+      <div class="card border-0 shadow-sm rounded-4 p-3 bg-white h-100">
+        <div class="d-flex align-items-center">
+          <div class="bg-primary-subtle text-primary p-3 rounded-3 me-3 fs-3">
+            <i class="fa-regular fa-user"></i>
+          </div>
+          <div>
+            <div class="fw-bold fs-4">{{ stats.total_users }}</div>
+            <div class="text-muted small text-uppercase">Total Users</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Analytics Chart Row -->
+  <div class="row mb-5">
+    <div class="col-lg-8 mb-4">
+      <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+        <h3 class="h6 fw-bold mb-3"><i class="fa-solid fa-chart-line text-success me-2"></i> Weekly Traffic Trend</h3>
+        <div style="height: 250px; position: relative;">
+          <canvas id="trafficChart"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 mb-4">
+      <div class="card border-0 shadow-sm rounded-4 p-4 bg-white h-100">
+        <h3 class="h6 fw-bold mb-3"><i class="fa-solid fa-chart-pie text-success me-2"></i> Category Share</h3>
+        <div style="height: 220px; position: relative;">
+          <canvas id="categoryShareChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Articles Catalog Table -->
+  <div class="card border-0 shadow-sm rounded-4 bg-white mb-4">
+    <div class="card-header bg-transparent fw-bold border-0 pt-3 px-4 d-flex justify-content-between align-items-center">
+      <span><i class="fa-solid fa-list-check text-success me-2"></i> Encyclopedia Inventory</span>
+      <span class="badge bg-success">{{ articles|length }} articles total</span>
+    </div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table align-middle table-hover m-0">
+          <thead class="table-light">
+            <tr>
+              <th class="ps-4">Article Title</th>
+              <th>Category</th>
+              <th>Views</th>
+              <th>Status</th>
+              <th>Role Permissions</th>
+              <th class="text-end pe-4">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for art in articles %}
+              <tr>
+                <td class="ps-4">
+                  <div class="fw-bold text-dark">{{ art.title }}</div>
+                  <span class="text-muted small fs-6">Slug: {{ art.slug }}</span>
+                  {% if art.is_featured %}
+                    <span class="badge bg-warning text-dark ms-2 small">Featured</span>
+                  {% endif %}
+                </td>
+                <td>{{ art.category.name }}</td>
+                <td><i class="fa-regular fa-eye me-1 text-muted"></i> {{ art.views }}</td>
+                <td>
+                  {% if art.is_published %}
+                    <span class="badge bg-success-subtle text-success px-2 py-1 rounded">Published</span>
+                  {% else %}
+                    <span class="badge bg-secondary-subtle text-secondary px-2 py-1 rounded">Draft</span>
+                  {% endif %}
+                </td>
+                <td>
+                  <span class="small text-muted">Edited by: {{ art.author.username }}</span>
+                </td>
+                <td class="text-end pe-4">
+                  <div class="d-flex justify-content-end gap-2">
+                    <a href="{{ url_for('cms.edit_article', article_id=art.id) }}" class="btn btn-sm btn-outline-success" title="Edit Article">
+                      <i class="fa-regular fa-pen-to-square"></i>
+                    </a>
+                    
+                    <!-- Delete Button Form -->
+                    <form action="{{ url_for('cms.delete_article', article_id=art.id) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this article? This is irreversible.');">
+                      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                      <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete Article">
+                        <i class="fa-solid fa-trash-can"></i>
+                      </button>
+                    </form>
+                  </div>
+                </td>
+              </tr>
+            {% else %}
+              <tr>
+                <td colspan="6" class="text-center py-5 text-muted">
+                  <i class="fa-solid fa-box-open fs-1 mb-2"></i>
+                  <p>No articles available in the encyclopedia database yet.</p>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Chart.js CDN for analytics graphs -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // Traffic Trend Line Chart
+  const trafficCtx = document.getElementById('trafficChart').getContext('2d');
+  new Chart(trafficCtx, {
+    type: 'line',
+    data: {
+      labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      datasets: [{
+        label: 'Daily Unique Views',
+        data: [150, 230, 180, 290, 420, 310, 380],
+        borderColor: '#10a359',
+        backgroundColor: 'rgba(16, 163, 89, 0.1)',
+        borderWidth: 3,
+        fill: true,
+        tension: 0.3
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false }
+      },
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
+  });
+
+  // Category Share Donut Chart
+  const shareCtx = document.getElementById('categoryShareChart').getContext('2d');
+  new Chart(shareCtx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Myths', 'Disasters', 'Environment', 'Cosmos', 'Human Impact'],
+      datasets: [{
+        data: [20, 25, 15, 30, 10],
+        backgroundColor: ['#e74c3c', '#e67e22', '#2ecc71', '#3498db', '#9b59b6']
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'right',
+          labels: { boxWidth: 12, font: { size: 10 } }
+        }
+      }
+    }
+  });
+</script>
+{% endblock %}

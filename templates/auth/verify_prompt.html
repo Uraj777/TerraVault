@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Verify Email Address{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6 text-center">
+      <div class="card shadow border-0 rounded-4 p-5 bg-white">
+        <div class="card-body">
+          <i class="fa-solid fa-envelope-open-text text-success display-1 mb-4"></i>
+          <h2 class="fw-bold mb-3">Email Verification Simulated</h2>
+          <p class="text-secondary lead mb-4">
+            Thank you for registering on TerraVault! We've simulated sending a validation verification email to <strong>{{ current_user.email }}</strong>.
+          </p>
+          <div class="p-3 bg-light rounded-3 mb-4 text-start">
+            <h5 class="fw-bold text-success"><i class="fa-solid fa-flask"></i> Sandbox Verification Mode</h5>
+            <p class="small text-muted mb-2">Since we are running in development, you can complete email verification instantly by clicking the link below:</p>
+            <a href="{{ url_for('auth.verify') }}" class="btn btn-success w-100 fw-bold">Verify My Email Instantly</a>
+          </div>
+          <p class="small text-muted">
+            If you need to edit your account settings, you can check your <a href="{{ url_for('auth.profile', username=current_user.username) }}" class="text-success text-decoration-none fw-bold">Profile</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

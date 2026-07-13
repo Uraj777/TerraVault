@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Categories{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="row align-items-center mb-4">
+    <div class="col-md-6">
+      <h1 class="h2 fw-bold text-success m-0"><i class="fa-solid fa-folder-tree me-2"></i> Category Structure</h1>
+      <p class="text-muted m-0">Organize and structure the encyclopedia category directory.</p>
+    </div>
+    <div class="col-md-6 text-md-end mt-3 mt-md-0">
+      <a href="{{ url_for('cms.dashboard') }}" class="btn btn-outline-success">
+        <i class="fa-solid fa-arrow-left me-1"></i> Back to Dashboard
+      </a>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- Left: Create Category Form -->
+    <div class="col-lg-4 mb-4">
+      <div class="card border shadow-sm rounded-4 p-4 bg-white">
+        <div class="card-body">
+          <h3 class="h5 fw-bold mb-3 text-success">Add Category</h3>
+          <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            
+            <div class="mb-3">
+              {{ form.name.label(class="form-label fw-bold") }}
+              {% if form.name.errors %}
+                {{ form.name(class="form-control is-invalid") }}
+                <div class="invalid-feedback">
+                  {% for error in form.name.errors %}
+                    <span>{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ form.name(class="form-control", placeholder="e.g. Archaeology") }}
+              {% endif %}
+            </div>
+
+            <div class="mb-4">
+              {{ form.description.label(class="form-label fw-bold") }}
+              {% if form.description.errors %}
+                {{ form.description(class="form-control is-invalid", rows="4") }}
+                <div class="invalid-feedback">
+                  {% for error in form.description.errors %}
+                    <span>{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ form.description(class="form-control", rows="4", placeholder="Explain what topics are compiled here...") }}
+              {% endif %}
+            </div>
+
+            <div class="d-grid">
+              {{ form.submit(class="btn btn-success") }}
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Current Categories List Table -->
+    <div class="col-lg-8">
+      <div class="card border shadow-sm rounded-4 bg-white">
+        <div class="card-header bg-transparent fw-bold border-0 pt-3 px-4 d-flex justify-content-between align-items-center">
+          <span><i class="fa-solid fa-folder-open text-success me-2"></i> Current Categories</span>
+          <span class="badge bg-success">{{ categories|length }} active</span>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table align-middle table-hover m-0">
+              <thead class="table-light">
+                <tr>
+                  <th class="ps-4">Category Detail</th>
+                  <th>Slug URL</th>
+                  <th>Article Count</th>
+                  <th class="text-end pe-4">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for cat in categories %}
+                  <tr>
+                    <td class="ps-4">
+                      <div class="fw-bold text-dark">{{ cat.name }}</div>
+                      <p class="text-muted small m-0 text-truncate" style="max-width: 250px;">{{ cat.description }}</p>
+                    </td>
+                    <td><code>/category/{{ cat.slug }}</code></td>
+                    <td>
+                      <span class="badge bg-success-subtle text-success px-2 py-1 rounded fw-bold">{{ cat.articles|length }}</span>
+                    </td>
+                    <td class="text-end pe-4">
+                      <form action="{{ url_for('cms.delete_category', category_id=cat.id) }}" method="post" onsubmit="return confirm('Are you sure you want to delete this category? This will fail if it contains active articles.');">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete Category" {% if cat.articles %}disabled{% endif %}>
+                          <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                      </form>
+                    </td>
+                  </tr>
+                {% else %}
+                  <tr>
+                    <td colspan="4" class="text-center py-4 text-muted">No categories seeded. Add one.</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

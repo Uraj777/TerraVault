@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+
+{% block title %}{{ user.username }}'s Profile{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="row">
+    <!-- Profile Sidebar Card -->
+    <div class="col-lg-4 mb-4">
+      <div class="card shadow-sm border-0 rounded-4 p-4 text-center bg-white">
+        <div class="card-body">
+          <div class="mb-3">
+            <i class="fa-solid fa-circle-user text-success display-1"></i>
+          </div>
+          <h2 class="fw-bold mb-1">{{ user.username }}</h2>
+          <span class="badge bg-success-subtle text-success px-3 py-1 text-uppercase mb-3 fw-bold">{{ user.role.name }}</span>
+          
+          <div class="d-flex justify-content-center gap-4 my-3 py-2 border-top border-bottom">
+            <div>
+              <div class="fw-bold text-success fs-4">{{ user.reputation }}</div>
+              <div class="small text-muted text-uppercase">Reputation</div>
+            </div>
+            <div>
+              <div class="fw-bold text-success fs-4">{{ user.articles|length }}</div>
+              <div class="small text-muted text-uppercase">Articles</div>
+            </div>
+          </div>
+          
+          <ul class="list-group list-group-flush text-start small mb-4">
+            <li class="list-group-item bg-transparent px-0 text-muted"><i class="fa-solid fa-envelope me-2"></i> {{ user.email }}</li>
+            {% if user.profile.location %}
+              <li class="list-group-item bg-transparent px-0 text-muted"><i class="fa-solid fa-location-dot me-2"></i> {{ user.profile.location }}</li>
+            {% endif %}
+            {% if user.profile.website %}
+              <li class="list-group-item bg-transparent px-0 text-muted">
+                <i class="fa-solid fa-globe me-2"></i> 
+                <a href="{{ user.profile.website }}" target="_blank" class="text-success text-decoration-none fw-bold">{{ user.profile.website }}</a>
+              </li>
+            {% endif %}
+            <li class="list-group-item bg-transparent px-0 text-muted"><i class="fa-regular fa-calendar-days me-2"></i> Joined: {{ user.profile.joined_at|datetimeformat }}</li>
+          </ul>
+          
+          {% if current_user.is_authenticated and current_user.id == user.id %}
+            <a href="{{ url_for('auth.edit_profile') }}" class="btn btn-outline-success btn-sm w-100">
+              <i class="fa-regular fa-pen-to-square me-1"></i> Edit Profile Metadata
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs Content Block -->
+    <div class="col-lg-8">
+      <div class="card shadow-sm border-0 rounded-4 p-4 bg-white">
+        <div class="card-body">
+          
+          <ul class="nav nav-pills mb-4" id="profileTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active btn-sm" id="achievements-tab" data-bs-toggle="pill" data-bs-target="#achievements" type="button" role="tab" aria-controls="achievements" aria-selected="true">
+                <i class="fa-solid fa-award me-1"></i> Achievements ({{ achievements|length }})
+              </button>
+            </li>
+            {% if current_user.is_authenticated and current_user.id == user.id %}
+              <li class="nav-item" role="presentation">
+                <button class="nav-link btn-sm" id="bookmarks-tab" data-bs-toggle="pill" data-bs-target="#bookmarks" type="button" role="tab" aria-controls="bookmarks" aria-selected="false">
+                  <i class="fa-regular fa-bookmark me-1"></i> Bookmarks ({{ bookmarks|length }})
+                </button>
+              </li>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link btn-sm" id="history-tab" data-bs-toggle="pill" data-bs-target="#history" type="button" role="tab" aria-controls="history" aria-selected="false">
+                  <i class="fa-solid fa-clock-rotate-left me-1"></i> History
+                </button>
+              </li>
+            {% endif %}
+          </ul>
+
+          <div class="tab-content" id="profileTabsContent">
+            <!-- Achievements Tab -->
+            <div class="tab-pane fade show active" id="achievements" role="tabpanel" aria-labelledby="achievements-tab">
+              <h3 class="h5 fw-bold mb-3 text-success">Badges & Unlocks</h3>
+              <div class="row">
+                {% for badge in achievements %}
+                  <div class="col-md-6 mb-3">
+                    <div class="d-flex align-items-center p-3 bg-light rounded-3 border-start border-warning border-4 shadow-sm">
+                      <i class="fa-solid fa-trophy text-warning fs-3 me-3"></i>
+                      <div>
+                        <div class="fw-bold text-dark">{{ badge.name }}</div>
+                        <div class="small text-muted">{{ badge.desc }}</div>
+                      </div>
+                    </div>
+                  </div>
+                {% else %}
+                  <div class="col-12 py-4 text-center text-muted">
+                    <i class="fa-solid fa-award fs-1 mb-2"></i>
+                    <p>No badges unlocked yet. Increase your reputation by contributing content.</p>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+
+            {% if current_user.is_authenticated and current_user.id == user.id %}
+              <!-- Bookmarks Tab -->
+              <div class="tab-pane fade" id="bookmarks" role="tabpanel" aria-labelledby="bookmarks-tab">
+                <h3 class="h5 fw-bold mb-3 text-success">Bookmarked Articles</h3>
+                <div class="list-group list-group-flush">
+                  {% for bm in bookmarks %}
+                    <div class="list-group-item bg-transparent px-0 d-flex justify-content-between align-items-center">
+                      <div>
+                        <a href="{{ url_for('wiki.article_view', slug=bm.article.slug) }}" class="text-decoration-none text-dark fw-bold">
+                          {{ bm.article.title }}
+                        </a>
+                        <div class="small text-muted">{{ bm.article.summary }}</div>
+                      </div>
+                      <form action="{{ url_for('wiki.bookmark_toggle', article_id=bm.article_id) }}" method="POST" class="ms-3">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Remove Bookmark">
+                          <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                      </form>
+                    </div>
+                  {% else %}
+                    <div class="py-4 text-center text-muted">
+                      <i class="fa-regular fa-bookmark fs-1 mb-2"></i>
+                      <p>You haven't bookmarked any articles yet.</p>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <!-- History Tab -->
+              <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
+                <h3 class="h5 fw-bold mb-3 text-success">Reading History</h3>
+                <div class="list-group list-group-flush">
+                  {% for entry in history %}
+                    <div class="list-group-item bg-transparent px-0 py-2 small d-flex justify-content-between align-items-center">
+                      <div>
+                        <a href="{{ url_for('wiki.article_view', slug=entry.article.slug) }}" class="text-decoration-none text-dark fw-bold">
+                          {{ entry.article.title }}
+                        </a>
+                        <div class="text-muted fs-6">Time spent: {{ (entry.time_spent / 60)|round|int }} min(s)</div>
+                      </div>
+                      <span class="text-muted small">Viewed: {{ entry.last_viewed|datetimeformat }}</span>
+                    </div>
+                  {% else %}
+                    <div class="py-4 text-center text-muted">
+                      <i class="fa-solid fa-clock-rotate-left fs-1 mb-2"></i>
+                      <p>No reading history recorded yet.</p>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,166 @@
+[
+  {
+    "title": "Atlantis",
+    "category": "myths",
+    "img": "atlantis.jpg",
+    "summary": "A legendary island said to have sunk beneath the sea in a single day and night.",
+    "slug": "atlantis",
+    "content": "Full content for Atlantis will go here."
+  },
+  {
+    "title": "Chernobyl",
+    "category": "disasters",
+    "img": "chernobyl.jpg",
+    "summary": "The site of the world's worst nuclear disaster, abandoned since 1986.",
+    "slug": "chernobyl",
+    "content": "Full content for Chernobyl will go here."
+  },
+  {
+    "title": "Pompeii Volcano",
+    "category": "disasters",
+    "img": "pompeii.jpg",
+    "summary": "An ancient Roman city buried in ash when Mount Vesuvius erupted.",
+    "slug": "pompeii-volcano",
+    "content": "Full content for Pompeii will go here."
+  },
+
+  /* =============================
+     ENVIRONMENT CATEGORY
+     ============================= */
+  {
+    "title": "Amazon Rainforest",
+    "category": "environment",
+    "img": "amazon.jpg",
+    "summary": "Earth's largest rainforest, home to millions of species.",
+    "slug": "amazon-rainforest",
+    "content": "Full content for Amazon Rainforest will go here."
+  },
+  {
+    "title": "Antarctica",
+    "category": "environment",
+    "img": "antarctica.jpg",
+    "summary": "A frozen continent at the bottom of the world with extreme environments.",
+    "slug": "antarctica",
+    "content": "Full content for Antarctica will go here."
+  },
+  {
+    "title": "North Pole",
+    "category": "environment",
+    "img": "northpole.jpg",
+    "summary": "The northernmost point on Earth, located in the Arctic Circle.",
+    "slug": "north-pole",
+    "content": "Full content for the North Pole will go here."
+  },
+
+  /* =============================
+     COSMOS CATEGORY
+     ============================= */
+  {
+    "title": "Supernova",
+    "category": "cosmos",
+    "img": "supernova.jpg",
+    "summary": "Explosive death of a massive star that seeds the universe with elements.",
+    "slug": "supernova",
+    "content": "Full content for Supernova will go here."
+  },
+  {
+    "title": "Black Holes",
+    "category": "cosmos",
+    "img": "blackhole.jpg",
+    "summary": "Regions of space where gravity is so strong that even light cannot escape.",
+    "slug": "black-holes",
+    "content": "Full content for Black Holes will go here."
+  },
+  {
+    "title": "Big Bang",
+    "category": "cosmos",
+    "img": "bigbang.jpg",
+    "summary": "The origin of the universe, expanding from a singular point.",
+    "slug": "big-bang",
+    "content": "Full content for Big Bang will go here."
+  },
+
+  /* =============================
+     DISASTERS CATEGORY
+     ============================= */
+  {
+    "title": "2004 Indian Ocean Tsunami",
+    "category": "disasters",
+    "img": "indonesia-tsunami.jpg",
+    "summary": "A devastating tsunami triggered by a massive undersea earthquake.",
+    "slug": "indian-ocean-tsunami",
+    "content": "Full content for the Indian Ocean Tsunami will go here."
+  },
+  {
+    "title": "Haiti Earthquake 2010",
+    "category": "disasters",
+    "img": "haiti-earthquake.jpg",
+    "summary": "A catastrophic magnitude 7.0 earthquake that struck Port-au-Prince.",
+    "slug": "haiti-earthquake",
+    "content": "Full content for the Haiti Earthquake will go here."
+  },
+  {
+    "title": "Hurricane Katrina",
+    "category": "disasters",
+    "img": "katrina.jpg",
+    "summary": "One of the deadliest hurricanes to hit the United States.",
+    "slug": "hurricane-katrina",
+    "content": "Full content for Hurricane Katrina will go here."
+  },
+
+  /* =============================
+     HUMAN IMPACT CATEGORY
+     ============================= */
+  {
+    "title": "Deforestation",
+    "category": "human-impact",
+    "img": "deforestation.jpg",
+    "summary": "The large-scale removal of forests for agriculture, mining, and expansion.",
+    "slug": "deforestation",
+    "content": "Full content for Deforestation will go here."
+  },
+  {
+    "title": "Ocean Pollution",
+    "category": "human-impact",
+    "img": "ocean-pollution.jpg",
+    "summary": "Toxic waste, plastics, and chemicals harming marine life.",
+    "slug": "ocean-pollution",
+    "content": "Full content for Ocean Pollution will go here."
+  },
+  {
+    "title": "Climate Change",
+    "category": "human-impact",
+    "img": "climate-change.jpg",
+    "summary": "Human-driven global warming causing extreme events worldwide.",
+    "slug": "climate-change",
+    "content": "Full content for Climate Change will go here."
+  },
+
+    /* =============================
+         MYTHS CATEGORY
+         ============================= */
+    {
+        "title": "Loch Ness Monster",
+        "category": "myths",
+        "img": "loch-ness.jpg",
+        "summary": "A legendary aquatic creature said to inhabit Loch Ness in Scotland.",
+        "slug": "loch-ness-monster",
+        "content": "Full content for Loch Ness Monster will go here."
+    },
+    {
+        "title": "Yeti",
+        "category": "myths",
+        "img": "yeti.jpg",
+        "summary": "A mythical ape-like creature believed to inhabit the Himalayan mountains.",
+        "slug": "yeti",
+        "content": "Full content for Yeti will go here."
+    },
+  {
+    "title": "Bermuda Triangle",
+    "category": "myths",
+    "img": "bermuda.jpg",
+    "summary": "A mysterious region where ships and planes have reportedly vanished.",
+    "slug": "bermuda-triangle",
+    "content": "Full content for Bermuda Triangle will go here."
+  }
+]

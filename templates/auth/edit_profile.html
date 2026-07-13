@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow border-0 rounded-4 p-4 bg-white">
+        <div class="card-body">
+          <h2 class="fw-bold mb-4 text-center text-success"><i class="fa-regular fa-pen-to-square me-2"></i> Update Profile</h2>
+          
+          <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            
+            <!-- Location -->
+            <div class="mb-3">
+              {{ form.location.label(class="form-label fw-bold") }}
+              {% if form.location.errors %}
+                {{ form.location(class="form-control is-invalid") }}
+                <div class="invalid-feedback">
+                  {% for error in form.location.errors %}
+                    <span>{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ form.location(class="form-control", placeholder="e.g. New York, USA") }}
+              {% endif %}
+            </div>
+
+            <!-- Website -->
+            <div class="mb-3">
+              {{ form.website.label(class="form-label fw-bold") }}
+              {% if form.website.errors %}
+                {{ form.website(class="form-control is-invalid") }}
+                <div class="invalid-feedback">
+                  {% for error in form.website.errors %}
+                    <span>{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ form.website(class="form-control", placeholder="e.g. https://myportfolio.com") }}
+              {% endif %}
+            </div>
+
+            <!-- Bio -->
+            <div class="mb-4">
+              {{ form.bio.label(class="form-label fw-bold") }}
+              {% if form.bio.errors %}
+                {{ form.bio(class="form-control is-invalid", rows="4") }}
+                <div class="invalid-feedback">
+                  {% for error in form.bio.errors %}
+                    <span>{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ form.bio(class="form-control", rows="4", placeholder="Tell us about yourself...") }}
+              {% endif %}
+              <div class="form-text small">Max 500 characters.</div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="d-flex gap-2">
+              {{ form.submit(class="btn btn-success flex-grow-1") }}
+              <a href="{{ url_for('auth.profile', username=current_user.username) }}" class="btn btn-outline-secondary">Cancel</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

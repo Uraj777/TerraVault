@@ -1,0 +1,216 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="row">
+    <!-- Main Form Column -->
+    <div class="col-lg-8 mx-auto">
+      <div class="card border shadow-sm rounded-4 p-4 p-md-5 bg-white mb-5">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold text-success m-0"><i class="fa-solid fa-file-pen me-2"></i> {{ title }}</h2>
+            <a href="{{ url_for('cms.dashboard') }}" class="btn btn-sm btn-outline-secondary">Back to Dashboard</a>
+          </div>
+          
+          <form method="POST" action="" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+
+            <!-- Title -->
+            <div class="mb-3">
+              {{ form.title.label(class="form-label fw-bold") }}
+              {% if form.title.errors %}
+                {{ form.title(class="form-control is-invalid") }}
+                <div class="invalid-feedback">
+                  {% for error in form.title.errors %}
+                    <span>{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ form.title(class="form-control", placeholder="e.g. Ancient Roman Aqueducts") }}
+              {% endif %}
+            </div>
+
+            <!-- Summary -->
+            <div class="mb-3">
+              {{ form.summary.label(class="form-label fw-bold") }}
+              {% if form.summary.errors %}
+                {{ form.summary(class="form-control is-invalid") }}
+                <div class="invalid-feedback">
+                  {% for error in form.summary.errors %}
+                    <span>{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ form.summary(class="form-control") }}
+              {% endif %}
+            </div>
+
+            <!-- Category and Image Cover Row -->
+            <div class="row mb-3">
+              <div class="col-md-6 mb-3 mb-md-0">
+                {{ form.category_id.label(class="form-label fw-bold") }}
+                {% if form.category_id.errors %}
+                  {{ form.category_id(class="form-select is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.category_id.errors %}
+                      <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  {{ form.category_id(class="form-select") }}
+                {% endif %}
+              </div>
+              <div class="col-md-6">
+                {{ form.image.label(class="form-label fw-bold") }}
+                {% if form.image.errors %}
+                  {{ form.image(class="form-control is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.image.errors %}
+                      <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  {{ form.image(class="form-control") }}
+                {% endif %}
+                
+                <!-- Image Preview helper -->
+                {% if article and article.image_url %}
+                  <div class="mt-2 text-start">
+                    <span class="small text-muted">Current image:</span>
+                    {% if article.image_url.startswith('uploaded_') %}
+                      <a href="{{ url_for('static', filename='uploads/' + article.image_url) }}" target="_blank" class="small text-success text-decoration-none d-block">{{ article.image_url }}</a>
+                    {% else %}
+                      <a href="{{ url_for('static', filename=article.image_url) }}" target="_blank" class="small text-success text-decoration-none d-block">{{ article.image_url }}</a>
+                    {% endif %}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+
+            <!-- Tags -->
+            <div class="mb-3">
+              {{ form.tags.label(class="form-label fw-bold") }}
+              {% if form.tags.errors %}
+                {{ form.tags(class="form-control is-invalid") }}
+                <div class="invalid-feedback">
+                  {% for error in form.tags.errors %}
+                    <span>{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ form.tags(class="form-control") }}
+              {% endif %}
+              <div class="form-text small">Use commas to separate tags, e.g. "Space, Physics, Gravity"</div>
+            </div>
+
+            <!-- Content HTML markup -->
+            <div class="mb-3">
+              {{ form.content.label(class="form-label fw-bold") }}
+              {% if form.content.errors %}
+                {{ form.content(class="form-control is-invalid", rows="15") }}
+                <div class="invalid-feedback">
+                  {% for error in form.content.errors %}
+                    <span>{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ form.content(class="form-control", rows="15", placeholder="Write article here (HTML tags supported for bold, italic, subheadings)...") }}
+              {% endif %}
+            </div>
+
+            <!-- References -->
+            <div class="mb-3">
+              {{ form.references_data.label(class="form-label fw-bold") }}
+              {% if form.references_data.errors %}
+                {{ form.references_data(class="form-control is-invalid", rows="4") }}
+                <div class="invalid-feedback">
+                  {% for error in form.references_data.errors %}
+                    <span>{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ form.references_data(class="form-control", rows="4") }}
+              {% endif %}
+            </div>
+
+            <!-- Version Edit Comments -->
+            <div class="mb-4 bg-light p-3 rounded-3">
+              <h4 class="h6 fw-bold mb-2">Audit & Version Control</h4>
+              <div class="mb-3">
+                {{ form.change_summary.label(class="form-label small fw-bold") }}
+                {% if form.change_summary.errors %}
+                  {{ form.change_summary(class="form-control form-control-sm is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.change_summary.errors %}
+                      <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  {{ form.change_summary(class="form-control form-control-sm") }}
+                {% endif %}
+                <div class="form-text small fs-6">Brief summary describing the updates made in this revision.</div>
+              </div>
+              
+              <div class="row align-items-center">
+                <div class="col-sm-6 mb-2 mb-sm-0">
+                  <div class="form-check form-switch">
+                    {{ form.is_published(class="form-check-input") }}
+                    {{ form.is_published.label(class="form-check-label small fw-bold") }}
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-check form-switch">
+                    {{ form.is_featured(class="form-check-input") }}
+                    {{ form.is_featured.label(class="form-check-label small fw-bold") }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Submit -->
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+              <a href="{{ url_for('cms.dashboard') }}" class="btn btn-outline-secondary px-4 py-2 me-md-2">Cancel</a>
+              {{ form.submit(class="btn btn-success px-5 py-2") }}
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Revision History / Versioning Timeline block -->
+      {% if article and article.versions %}
+        <div class="card border shadow-sm rounded-4 p-4 bg-white">
+          <div class="card-body">
+            <h3 class="h5 fw-bold text-dark mb-3"><i class="fa-solid fa-timeline text-success me-2"></i> Version History Timeline</h3>
+            <div class="list-group list-group-flush small">
+              {% for ver in article.versions|sort(attribute='created_at', reverse=True) %}
+                <div class="list-group-item bg-transparent px-0 py-3 d-flex align-items-start gap-3">
+                  <div class="bg-success text-white rounded-circle p-2 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                    <i class="fa-solid fa-code-commit"></i>
+                  </div>
+                  <div>
+                    <div class="fw-bold text-dark">Revision #{{ ver.id }} - "{{ ver.change_summary }}"</div>
+                    <div class="text-muted text-xs mb-1">
+                      Edited on: {{ ver.created_at|datetimeformat('%b %d, %Y at %I:%M %p') }}
+                      by: <span class="fw-bold text-success">{{ ver.editor.username }}</span>
+                    </div>
+                    <button class="btn btn-sm btn-link text-success p-0" type="button" data-bs-toggle="collapse" data-bs-target="#verCollapse-{{ ver.id }}" aria-expanded="false" aria-controls="verCollapse-{{ ver.id }}">
+                      View Revision Content Preview <i class="fa-solid fa-chevron-down ms-1"></i>
+                    </button>
+                    <div class="collapse mt-2" id="verCollapse-{{ ver.id }}">
+                      <div class="bg-light p-3 rounded border text-muted" style="max-height: 150px; overflow-y: auto; font-family: monospace;">
+                        {{ ver.content }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
