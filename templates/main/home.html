@@ -16,16 +16,6 @@
       <form action="{{ url_for('main.search') }}" method="get">
         <input type="text" name="q" class="form-control form-control-lg" placeholder="Search topics, anomalies, and discoveries..." required>
         <button class="btn btn-success btn-lg" type="submit"><i class="fa-solid fa-magnifying-glass me-1"></i> Explore</button>
-      </form>
-    </div>
-
-    <!-- Popular topics badges -->
-    <div class="d-flex justify-content-center flex-wrap gap-2 mb-3">
-      <span class="small text-muted align-self-center me-2">Trending Searches:</span>
-      <a href="{{ url_for('main.search', q='Atlantis') }}" class="badge bg-success-subtle text-success text-decoration-none">#Atlantis</a>
-      <a href="{{ url_for('main.search', q='Black Holes') }}" class="badge bg-success-subtle text-success text-decoration-none">#BlackHoles</a>
-      <a href="{{ url_for('main.search', q='Chernobyl') }}" class="badge bg-success-subtle text-success text-decoration-none">#Chernobyl</a>
-      <a href="{{ url_for('main.search', q='Volcano') }}" class="badge bg-success-subtle text-success text-decoration-none">#Vesuvius</a>
     </div>
   </div>
 </div>

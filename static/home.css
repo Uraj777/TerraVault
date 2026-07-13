@@ -33,50 +33,53 @@
   --radius-lg: 16px;
   --radius-md: 12px;
   --radius-sm: 8px;
+
+  /* Default Permanent Background Fallback (High Quality Cosmic space) */
+  --bg-image: url('https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?auto=format&fit=crop&w=1920&q=80');
 }
 
 /* Dark Mode (Default Theme) */
 [data-bs-theme="dark"] {
   --bg-base: #080809;
   --bg-surface: #101012;
-  --bg-glass: rgba(16, 16, 18, 0.7);
+  --bg-glass: rgba(16, 16, 18, 0.75);
   --border-glass: rgba(255, 255, 255, 0.05);
   --border-glass-hover: rgba(255, 255, 255, 0.15);
   
   --text-primary: #f9fafb;
-  --text-secondary: #9ca3af;
-  --text-muted: #6b7280;
+  --text-secondary: #e5e7eb; /* Brightened for reading comfort */
+  --text-muted: #8c939d;
   
   --shadow-cinematic: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
   --shadow-glow: 0 0 20px 0 rgba(16, 185, 129, 0.12);
   
-  --hero-gradient: radial-gradient(circle at top, #0f2215 0%, #080809 100%);
-  --hero-overlay: linear-gradient(to bottom, rgba(8, 8, 9, 0.2), #080809);
+  --hero-gradient: transparent; /* Seamless blend into the dynamic background */
+  --hero-overlay: transparent;
 }
 
-/* Light Mode (Fallback) */
+/* Light Mode (Fallback) - Softened to prevent high-contrast glare */
 [data-bs-theme="light"] {
-  --bg-base: #f3f4f6;
-  --bg-surface: #ffffff;
-  --bg-glass: rgba(255, 255, 255, 0.8);
-  --border-glass: rgba(0, 0, 0, 0.06);
+  --bg-base: #e5e7eb;
+  --bg-surface: #f4f5f7; /* Softer, low-glare minimalist surface */
+  --bg-glass: rgba(244, 245, 247, 0.88);
+  --border-glass: rgba(0, 0, 0, 0.08);
   --border-glass-hover: rgba(0, 0, 0, 0.15);
   
-  --text-primary: #111827;
-  --text-secondary: #4b5563;
-  --text-muted: #9ca3af;
+  --text-primary: #1e293b; /* Softer slate instead of glaring black */
+  --text-secondary: #475569;
+  --text-muted: #64748b;
   
   --shadow-cinematic: 0 25px 50px -12px rgba(0, 0, 0, 0.06);
   --shadow-glow: 0 0 20px 0 rgba(16, 185, 129, 0.05);
   
-  --hero-gradient: radial-gradient(circle at top, #eefcf3 0%, #f3f4f6 100%);
-  --hero-overlay: linear-gradient(to bottom, rgba(243, 244, 246, 0.2), #f3f4f6);
+  --hero-gradient: transparent;
+  --hero-overlay: transparent;
 }
 
-/* Base Body Styles */
+/* Base Body Styles (Supporting Dynamic Backgrounds) */
 body {
   font-family: var(--font-body);
-  background: var(--bg-base) !important;
+  background: transparent !important;
   color: var(--text-primary);
   transition: var(--transition-smooth);
   min-height: 100vh;
@@ -85,6 +88,50 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  position: relative;
+}
+
+/* Dynamic Cover Image Overlay (Responsive, High Quality, Minimalistic) */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: var(--bg-image);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  z-index: -2;
+  transition: background-image 1.5s ease-in-out;
+}
+
+/* Permanent Neutralizing Filter Overlay (Unifies site identity across images) */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(10, 10, 12, 0.84) 0%, rgba(6, 6, 7, 0.98) 100%);
+  z-index: -1;
+  pointer-events: none;
+  transition: background 0.4s ease;
+}
+
+/* Soft, parchment-like light mode background mask to prevent eye strain and blend images */
+[data-bs-theme="light"] body::after {
+  background: radial-gradient(circle at center, rgba(243, 244, 246, 0.65) 0%, rgba(225, 228, 235, 0.92) 100%);
+}
+
+/* Frosted glass content cards blending in light mode */
+[data-bs-theme="light"] .card, [data-bs-theme="light"] article {
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(12px) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
 }
 
 /* High-Contrast Accessibilities */
@@ -125,13 +172,70 @@ a:hover {
 }
 
 .navbar-brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+/* Stylized Brand Logo Icon Symbol */
+.logo-symbol {
+  width: 32px;
+  height: 32px;
+  background: rgba(16, 185, 129, 0.08);
+  border: 2px solid var(--emerald-primary);
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: 0 0 12px var(--emerald-glow);
+  transition: var(--transition-smooth);
+}
+
+.logo-symbol i {
+  font-size: 0.9rem;
+  color: var(--emerald-primary);
+  transition: var(--transition-smooth);
+}
+
+.logo-dot {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  width: 7px;
+  height: 7px;
+  background-color: var(--gold-primary);
+  border-radius: 50%;
+  box-shadow: 0 0 6px var(--gold-primary);
+}
+
+.navbar-brand:hover .logo-symbol {
+  border-color: #34d399;
+  transform: rotate(15deg) scale(1.08);
+  background: rgba(52, 211, 153, 0.15);
+}
+
+.navbar-brand:hover .logo-symbol i {
+  color: #34d399;
+}
+
+/* Styled Brand Text */
+.brand-text {
   font-family: var(--font-headers);
   font-weight: 800;
+  font-size: 1.45rem;
   letter-spacing: -0.04em;
-  font-size: 1.55rem;
-  background: linear-gradient(135deg, var(--gold-primary) 0%, var(--emerald-primary) 100%);
+  color: var(--text-primary);
+  display: inline-flex;
+  align-items: center;
+  margin-left: 8px;
+}
+
+.brand-vault {
+  background: linear-gradient(135deg, #34d399 0%, var(--emerald-primary) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  margin-left: 2px;
 }
 
 .nav-link {
@@ -299,8 +403,8 @@ article {
 }
 
 .article-body {
-  font-size: 1.15rem;
-  line-height: 1.85;
+  font-size: 1.25rem; /* Increased size for comfortable 2-3 min reading */
+  line-height: 1.95; /* Elegant line spacing for high readability */
   color: var(--text-secondary);
   letter-spacing: -0.015em;
   font-family: var(--font-body);
@@ -563,4 +667,11 @@ footer {
   padding: 48px 0 !important;
   color: var(--text-secondary) !important;
   margin-top: auto;
+}
+
+/* Specific article reading typography brightness increase for dark mode */
+[data-bs-theme="dark"] .article-body, 
+[data-bs-theme="dark"] .article-body p, 
+[data-bs-theme="dark"] .article-body li {
+  color: #f3f4f6 !important; /* Premium high-readability off-white */
 }

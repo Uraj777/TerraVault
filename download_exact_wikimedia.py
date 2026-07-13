@@ -16,7 +16,30 @@ file_titles = {
     'tunguska.jpg': 'Tunguska Ereignis-1.jpg',
     'vesuvius.jpg': 'Aerial image of Pompeii and Mount Vesuvius (view from the southeast).jpg',
     'wow-signal.jpg': 'Wow signal.jpg',
-    'oumuamua.jpg': "Artist's impression of \u02bbOumuamua.jpg"
+    'oumuamua.jpg': "Artist's impression of ʻOumuamua.jpg",
+    'mary-celeste.jpg': 'Mary Celeste as Amazon in 1861.jpg',
+    'el-dorado.jpg': 'Muisca raft - detail - Museo del Oro, Bogotá.jpg',
+    'stonehenge.jpg': 'Stonehenge, Wiltshire, England.jpg',
+    'machu-picchu.jpg': '80 - Machu Picchu - Juin 2009 - edit.jpg',
+    'easter-island.jpg': 'Moai Rano raraku.jpg',
+    'library-alexandria.jpg': 'Ancientlibraryalex.jpg',
+    'great-fire-london.jpg': 'Great Fire London.jpg',
+    'titanic-sinking.jpg': 'Titanic sinking, painting by Willy Stöwer.jpg',
+    'san-francisco-earthquake.jpg': 'San Francisco in ruins, 1906.jpg',
+    'hindenburg-disaster.jpg': 'Hindenburg disaster.jpg',
+    'bhopal-gas-tragedy.jpg': 'Bhopal-Union Carbide 1.jpg',
+    'mariana-trench.jpg': 'Challenger Deep EM124 Sonar Map and Diving History 101119.jpg',
+    'grand-canyon.jpg': 'Grand Canyon View.jpg',
+    'coralreef.jpg': 'Great Barrier Reef.jpg',
+    'surtsey-island.jpg': 'Surtsey eruption 1963.jpg',
+    'mount-everest.jpg': 'Mount Everest as seen from Drukair2.jpg',
+    'comet-halley.jpg': 'Comet Halley.jpg',
+    'olympus-mons.jpg': 'Olympus Mons.jpg',
+    'crab-nebula.jpg': 'Crab Nebula.jpg',
+    'saturn-rings.jpg': 'Saturn from Cassini Orbiter (2004-10-06).jpg',
+    'deforestation.jpg': 'Amazonie deforestation.jpg',
+    'ocean-pollution.jpg': 'Beach plastic waste 3.jpg',
+    'climate-change.jpg': 'Gangotri Glacier, retreat from 1780 to 2001.jpg'
 }
 
 static_dir = 'static'

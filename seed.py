@@ -290,7 +290,7 @@ def seed_db():
                 
             # Check for rich content override
             slug = art.get('slug')
-            article_content = RICH_CONTENT.get(slug, art.get('content'))
+            article_content = art.get('content')
             
             # Simple reference seeds
             ref_list = [

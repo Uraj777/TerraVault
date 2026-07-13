@@ -5,6 +5,44 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{% block title %}TerraVault{% endblock %} - Encyclopedia & Knowledge Platform</title>
   
+  <!-- Dynamic Hourly Background & Accent Styling Script -->
+  <script>
+    (function() {
+      const bgImages = [
+        { url: 'https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?auto=format&fit=crop&w=1920&q=80', primaryColor: '#6366f1', hoverColor: '#4f46e5', glowColor: 'rgba(99, 102, 241, 0.18)' },
+        { url: 'https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=1920&q=80', primaryColor: '#10b981', hoverColor: '#059669', glowColor: 'rgba(16, 185, 129, 0.18)' },
+        { url: 'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?auto=format&fit=crop&w=1920&q=80', primaryColor: '#06b6d4', hoverColor: '#0891b2', glowColor: 'rgba(6, 182, 212, 0.18)' },
+        { url: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=1920&q=80', primaryColor: '#8b5cf6', hoverColor: '#7c3aed', glowColor: 'rgba(139, 92, 246, 0.18)' },
+        { url: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1920&q=80', primaryColor: '#10b981', hoverColor: '#059669', glowColor: 'rgba(16, 185, 129, 0.18)' },
+        { url: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1920&q=80', primaryColor: '#f59e0b', hoverColor: '#d97706', glowColor: 'rgba(245, 158, 11, 0.18)' },
+        { url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=80', primaryColor: '#3b82f6', hoverColor: '#2563eb', glowColor: 'rgba(59, 130, 246, 0.18)' },
+        { url: 'https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=1920&q=80', primaryColor: '#10b981', hoverColor: '#059669', glowColor: 'rgba(16, 185, 129, 0.18)' },
+        { url: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=1920&q=80', primaryColor: '#0d9488', hoverColor: '#0f766e', glowColor: 'rgba(13, 148, 136, 0.18)' },
+        { url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=80', primaryColor: '#06b6d4', hoverColor: '#0891b2', glowColor: 'rgba(6, 182, 212, 0.18)' },
+        { url: 'https://images.unsplash.com/photo-1614730321146-b6fa6a46bcb4?auto=format&fit=crop&w=1920&q=80', primaryColor: '#f59e0b', hoverColor: '#d97706', glowColor: 'rgba(245, 158, 11, 0.18)' },
+        { url: 'https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=1920&q=80', primaryColor: '#10b981', hoverColor: '#059669', glowColor: 'rgba(16, 185, 129, 0.18)' },
+        { url: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1920&q=80', primaryColor: '#10b981', hoverColor: '#059669', glowColor: 'rgba(16, 185, 129, 0.18)' },
+        { url: 'https://images.unsplash.com/photo-1551244072-5d12893278ab?auto=format&fit=crop&w=1920&q=80', primaryColor: '#3b82f6', hoverColor: '#2563eb', glowColor: 'rgba(59, 130, 246, 0.18)' },
+        { url: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80', primaryColor: '#f97316', hoverColor: '#ea580c', glowColor: 'rgba(249, 115, 22, 0.18)' },
+        { url: 'https://images.unsplash.com/photo-1472214222541-d510753a8707?auto=format&fit=crop&w=1920&q=80', primaryColor: '#0d9488', hoverColor: '#0f766e', glowColor: 'rgba(13, 148, 136, 0.18)' },
+        { url: 'https://images.unsplash.com/photo-1495954484750-af469f2f9be5?auto=format&fit=crop&w=1920&q=80', primaryColor: '#f59e0b', hoverColor: '#d97706', glowColor: 'rgba(245, 158, 11, 0.18)' },
+        { url: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1920&q=80', primaryColor: '#d97706', hoverColor: '#b45309', glowColor: 'rgba(217, 119, 6, 0.18)' },
+        { url: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1920&q=80', primaryColor: '#4f46e5', hoverColor: '#4338ca', glowColor: 'rgba(79, 70, 229, 0.18)' },
+        { url: 'https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?auto=format&fit=crop&w=1920&q=80', primaryColor: '#6366f1', hoverColor: '#4f46e5', glowColor: 'rgba(99, 102, 241, 0.18)' },
+        { url: 'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=1920&q=80', primaryColor: '#a855f7', hoverColor: '#9333ea', glowColor: 'rgba(168, 85, 247, 0.18)' },
+        { url: 'https://images.unsplash.com/photo-1579033461380-adb47c3eb938?auto=format&fit=crop&w=1920&q=80', primaryColor: '#10b981', hoverColor: '#059669', glowColor: 'rgba(16, 185, 129, 0.18)' },
+        { url: 'https://images.unsplash.com/photo-1522030299830-16b8d3d049fe?auto=format&fit=crop&w=1920&q=80', primaryColor: '#6b7280', hoverColor: '#4b5563', glowColor: 'rgba(107, 114, 128, 0.18)' },
+        { url: 'https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?auto=format&fit=crop&w=1920&q=80', primaryColor: '#6366f1', hoverColor: '#4f46e5', glowColor: 'rgba(99, 102, 241, 0.18)' }
+      ];
+      const hour = new Date().getHours();
+      const config = bgImages[hour];
+      document.documentElement.style.setProperty('--bg-image', 'url(' + config.url + ')');
+      document.documentElement.style.setProperty('--emerald-primary', config.primaryColor);
+      document.documentElement.style.setProperty('--emerald-hover', config.hoverColor);
+      document.documentElement.style.setProperty('--emerald-glow', config.glowColor);
+    })();
+  </script>
+  
   <!-- Bootstrap 5 CSS via CDN -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
   
@@ -35,7 +73,11 @@
   <nav class="navbar navbar-expand-lg sticky-top glass-nav shadow-sm">
     <div class="container">
       <a class="navbar-brand d-flex align-items-center" href="{{ url_for('main.home') }}">
-        <i class="fa-solid fa-earth-americas me-2"></i> TerraVault
+        <div class="logo-symbol me-2">
+          <i class="fa-solid fa-shield-halved"></i>
+          <span class="logo-dot"></span>
+        </div>
+        <span class="brand-text">Terra<span class="brand-vault">Vault</span></span>
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
