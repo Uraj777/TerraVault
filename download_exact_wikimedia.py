@@ -50,8 +50,8 @@ headers = {
 }
 
 def get_wikimedia_direct_url(title):
-    """Query the Wikimedia API to get the current direct file URL."""
-    api_url = "https://commons.wikimedia.org/w/api.php?action=query&titles=" + urllib.parse.quote("File:" + title) + "&prop=imageinfo&iiprop=url&format=json"
+    """Query the Wikimedia API to get a 1200px resized image URL for web speed and size limits."""
+    api_url = "https://commons.wikimedia.org/w/api.php?action=query&titles=" + urllib.parse.quote("File:" + title) + "&prop=imageinfo&iiprop=url|thumburl&iiurlwidth=1200&format=json"
     try:
         req = urllib.request.Request(api_url, headers=headers)
         with urllib.request.urlopen(req) as response:
@@ -60,7 +60,9 @@ def get_wikimedia_direct_url(title):
         pages = data.get('query', {}).get('pages', {})
         for page_id, page_data in pages.items():
             if 'imageinfo' in page_data and len(page_data['imageinfo']) > 0:
-                return page_data['imageinfo'][0]['url']
+                info = page_data['imageinfo'][0]
+                # Return the 1200px thumbnail URL if available, else fallback to full
+                return info.get('thumburl') or info.get('url')
     except Exception as e:
         print(f"API query failed for '{title}': {e}")
     return None
