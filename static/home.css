@@ -7,8 +7,8 @@
 /* Design Tokens & Theme Variables */
 :root {
   /* Font Families */
-  --font-headers: 'Space Grotesk', system-ui, -apple-system, sans-serif;
-  --font-body: 'Manrope', system-ui, -apple-system, sans-serif;
+  --font-headers: 'Space Grotesk', 'Inter', system-ui, -apple-system, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
   --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
 
   /* Accent Palette */
@@ -674,4 +674,148 @@ footer {
 [data-bs-theme="dark"] .article-body p, 
 [data-bs-theme="dark"] .article-body li {
   color: #f3f4f6 !important; /* Premium high-readability off-white */
+}
+
+/* ==========================================================================
+   TERRAVAULT SAAS & CONTROL CENTER ANIMATIONS
+   ========================================================================== */
+.hover-grow {
+  transition: var(--transition-fast) !important;
+}
+.hover-grow:hover {
+  transform: scale(1.02) !important;
+}
+.tv-card img {
+  transition: var(--transition-smooth) !important;
+}
+.tv-card:hover img {
+  transform: scale(1.03) !important;
+}
+.glass-panel {
+  background: var(--bg-glass) !important;
+  border: 1px solid var(--border-glass) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+}
+.community-sidebar-item:hover {
+  padding-left: 20px !important;
+  color: var(--emerald-primary) !important;
+}
+.community-sidebar-item.active {
+  border-left: 3px solid var(--emerald-primary) !important;
+  padding-left: 17px !important;
+  background: rgba(16, 185, 129, 0.05) !important;
+}
+.form-control:focus, .form-select:focus {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  border-color: var(--emerald-primary) !important;
+  box-shadow: 0 0 10px var(--emerald-glow) !important;
+  color: #fff !important;
+}
+@keyframes pulseGlow {
+  0% { box-shadow: 0 0 12px rgba(16, 185, 129, 0.12); }
+  50% { box-shadow: 0 0 25px rgba(16, 185, 129, 0.3); }
+  100% { box-shadow: 0 0 12px rgba(16, 185, 129, 0.12); }
+}
+.logo-symbol {
+  animation: pulseGlow 4s infinite ease-in-out;
+}
+.hover-emerald:hover {
+  color: var(--emerald-primary) !important;
+  transition: var(--transition-fast);
+}
+.text-truncate-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Page fade-in-up transition */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.fade-in-up {
+  animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Premium Card hover lifts and green/gold glows */
+.tv-card {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+.tv-card:hover {
+  transform: translateY(-6px) scale(1.008) !important;
+  box-shadow: 0 20px 40px rgba(16, 185, 129, 0.15) !important;
+  border-color: rgba(16, 185, 129, 0.35) !important;
+}
+
+/* Vote button active hover scales and glows */
+.vote-btn {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+.vote-btn:hover {
+  transform: scale(1.22) !important;
+}
+.vote-btn.up-btn:hover {
+  color: var(--emerald-primary) !important;
+  text-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
+}
+.vote-btn.down-btn:hover {
+  color: #ef4444 !important;
+  text-shadow: 0 0 10px rgba(239, 68, 68, 0.6);
+}
+
+/* Glassmorphism panel premium glows */
+.glass-panel {
+  background: rgba(16, 16, 18, 0.72) !important;
+  border: 1px solid rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: blur(25px) !important;
+  -webkit-backdrop-filter: blur(25px) !important;
+  transition: border-color 0.3s ease;
+}
+.glass-panel:hover {
+  border-color: rgba(16, 185, 129, 0.15) !important;
+}
+
+/* Animated sliding tab transitions in search & dashboard */
+.nav-pills .nav-link {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+.nav-pills .nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--emerald-primary);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+.nav-pills .nav-link.active::after {
+  width: 80%;
+}
+
+/* Premium SaaS Typography Smoothing & Spacings */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-weight: 450 !important;
+}
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: -0.025em !important;
+  font-weight: 750 !important;
+}
+.brand-text {
+  font-weight: 800 !important;
+  letter-spacing: -0.03em !important;
 }

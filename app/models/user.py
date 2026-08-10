@@ -32,8 +32,6 @@ class User(db.Model, UserMixin):
     profile = db.relationship('Profile', backref='user', uselist=False, cascade="all, delete-orphan")
     articles = db.relationship('Article', backref='author', lazy=True)
     versions = db.relationship('ArticleVersion', backref='editor', lazy=True)
-    bookmarks = db.relationship('Bookmark', backref='user', cascade="all, delete-orphan", lazy=True)
-    reading_history = db.relationship('ReadingHistory', backref='user', cascade="all, delete-orphan", lazy=True)
     drafts = db.relationship('Draft', backref='author', cascade="all, delete-orphan", lazy=True)
 
     def set_password(self, password):

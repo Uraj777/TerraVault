@@ -92,20 +92,121 @@ def create_app(config_name=None):
     # Wrap WSGI pipeline with WhiteNoise to serve static assets with far-future caching headers
     app.wsgi_app = WhiteNoise(app.wsgi_app, root=static_dir, prefix='static/')
     
+    # Register anonymous visitor cookies & metrics logging
+    register_request_handlers(app)
+    
     return app
+
+
+def register_request_handlers(app):
+    import uuid
+    import hashlib
+    from datetime import datetime
+    from flask import g, request
+    from app.models.community import AnonymousVisitor, PageViewMetric
+    from app.models.article import Article
+
+    @app.before_request
+    def before_request_func():
+        # Skip static assets, health check, robots.txt, sitemap, favicon
+        path = request.path
+        if (path.startswith('/static/') or 
+            path == '/health' or 
+            path == '/favicon.ico' or 
+            path == '/robots.txt' or 
+            path == '/sitemap.xml'):
+            g.visitor = None
+            return
+            
+        anon_cookie = request.cookies.get('anon_explorer_id')
+        cookie_to_set = None
+        if not anon_cookie:
+            anon_cookie = str(uuid.uuid4())
+            g.set_anon_cookie = anon_cookie
+            cookie_to_set = anon_cookie
+        else:
+            g.set_anon_cookie = None
+            
+        # Fetch or create AnonymousVisitor
+        visitor = AnonymousVisitor.query.filter_by(uuid=anon_cookie).first()
+        if not visitor:
+            # Generate name based on UUID prefix
+            short_id = anon_cookie[:4].upper()
+            display_name = f"Anonymous Explorer #{short_id}"
+            
+            # Generate colorful avatar background based on hash
+            h = int(hashlib.md5(anon_cookie.encode('utf-8')).hexdigest(), 16)
+            hue = h % 360
+            avatar_color = f"hsl({hue}, 70%, 45%)"
+            
+            visitor = AnonymousVisitor(
+                uuid=anon_cookie,
+                display_name=display_name,
+                avatar_color=avatar_color
+            )
+            db.session.add(visitor)
+            try:
+                db.session.commit()
+            except Exception:
+                db.session.rollback()
+                # Query again in case of concurrent writes
+                visitor = AnonymousVisitor.query.filter_by(uuid=anon_cookie).first()
+        else:
+            # Update last seen timestamp
+            visitor.last_seen_at = datetime.utcnow()
+            try:
+                db.session.commit()
+            except Exception:
+                db.session.rollback()
+                
+        # Set on global context
+        g.visitor = visitor
+        
+        # Track page view metrics selectively
+        article_id = None
+        if path.startswith('/wiki/'):
+            slug = path.split('/wiki/')[-1]
+            article = Article.query.filter_by(slug=slug).first()
+            if article:
+                article_id = article.id
+                
+        metric = PageViewMetric(
+            path=path,
+            article_id=article_id,
+            visitor_uuid=visitor.uuid if visitor else None
+        )
+        db.session.add(metric)
+        try:
+            db.session.commit()
+        except Exception:
+            db.session.rollback()
+
+    @app.after_request
+    def after_request_func(response):
+        if hasattr(g, 'set_anon_cookie') and g.set_anon_cookie:
+            # 1 year long-lived secure browser cookie
+            response.set_cookie(
+                'anon_explorer_id',
+                g.set_anon_cookie,
+                max_age=365 * 24 * 60 * 60,
+                httponly=True,
+                samesite='Lax',
+                secure=(os.environ.get('FLASK_ENV') == 'production')
+            )
+        return response
 
 
 def register_blueprints(app):
     """Register all application blueprints."""
     from app.blueprints.main.routes import main_bp
-    from app.blueprints.auth.routes import auth_bp
     from app.blueprints.wiki.routes import wiki_bp
-    from app.blueprints.cms.routes import cms_bp
+    from app.blueprints.admin.routes import admin_bp
+    from app.blueprints.community.routes import community_bp
     
     app.register_blueprint(main_bp)
-    app.register_blueprint(auth_bp, url_prefix='/auth')
     app.register_blueprint(wiki_bp, url_prefix='/wiki')
-    app.register_blueprint(cms_bp, url_prefix='/cms')
+    app.register_blueprint(admin_bp, url_prefix='/admin')
+    app.register_blueprint(community_bp, url_prefix='/c')
 
 
 def register_error_handlers(app):

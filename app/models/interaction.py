@@ -35,28 +35,28 @@ class Bookmark(db.Model):
     __tablename__ = 'bookmarks'
     
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
+    visitor_uuid = db.Column(db.String(36), db.ForeignKey('anonymous_visitors.uuid', ondelete='CASCADE'), nullable=False)
     article_id = db.Column(db.Integer, db.ForeignKey('articles.id', ondelete='CASCADE'), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     
     # Composite unique constraint to avoid duplicate bookmarks
-    __table_args__ = (db.UniqueConstraint('user_id', 'article_id', name='_user_article_bookmark_uc'),)
+    __table_args__ = (db.UniqueConstraint('visitor_uuid', 'article_id', name='_visitor_article_bookmark_uc'),)
     
     def __repr__(self):
-        return f"<Bookmark user_id={self.user_id} article_id={self.article_id}>"
+        return f"<Bookmark visitor_uuid={self.visitor_uuid} article_id={self.article_id}>"
 
 
 class ReadingHistory(db.Model):
     __tablename__ = 'reading_history'
     
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
+    visitor_uuid = db.Column(db.String(36), db.ForeignKey('anonymous_visitors.uuid', ondelete='CASCADE'), nullable=False)
     article_id = db.Column(db.Integer, db.ForeignKey('articles.id', ondelete='CASCADE'), nullable=False)
     time_spent = db.Column(db.Integer, default=0)  # in seconds
     last_viewed = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
-    # Composite unique constraint for history entries per user-article
-    __table_args__ = (db.UniqueConstraint('user_id', 'article_id', name='_user_article_history_uc'),)
+    # Composite unique constraint for history entries per visitor-article
+    __table_args__ = (db.UniqueConstraint('visitor_uuid', 'article_id', name='_visitor_article_history_uc'),)
     
     def __repr__(self):
-        return f"<ReadingHistory user_id={self.user_id} article_id={self.article_id}>"
+        return f"<ReadingHistory visitor_uuid={self.visitor_uuid} article_id={self.article_id}>"

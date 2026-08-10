@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Content Removed - TerraVault{% endblock %}
+
+{% block content %}
+<div class="container my-5 py-5 text-center">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card border-0 glass-panel shadow-lg p-5 rounded-4" style="background: rgba(16, 16, 18, 0.75);">
+        <i class="fa-solid fa-shield-halved text-danger display-1 mb-4"></i>
+        <h1 class="h3 fw-bold text-light mb-3">Content Removed</h1>
+        <p class="text-secondary mb-4">The discussion or comment you are trying to view has been removed by the administration for violating community guidelines.</p>
+        <a href="{{ url_for('main.home') }}" class="btn btn-success px-4 rounded-pill">Return Home</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

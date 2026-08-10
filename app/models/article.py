@@ -45,6 +45,7 @@ class Article(db.Model):
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     is_published = db.Column(db.Boolean, default=False, index=True)
+    status = db.Column(db.String(20), default='draft', index=True)  # 'draft', 'published', 'archived'
     is_featured = db.Column(db.Boolean, default=False, index=True)
     views = db.Column(db.Integer, default=0)
     reading_time = db.Column(db.Integer, default=1)  # in minutes

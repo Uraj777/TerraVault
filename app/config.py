@@ -16,7 +16,7 @@ class Config:
     SQLALCHEMY_DATABASE_URI = db_url
 
     # Image upload configuration
-    UPLOAD_FOLDER = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'static', 'uploads')
+    UPLOAD_FOLDER = os.path.join(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')), 'static', 'uploads')
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16MB max upload size
 
 class DevelopmentConfig(Config):

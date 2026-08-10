@@ -70,50 +70,50 @@ class WikiService:
         ).all()
 
     @staticmethod
-    def is_bookmarked(user_id, article_id):
-        """Check if an article is bookmarked by a user."""
-        if not user_id:
+    def is_bookmarked(visitor_uuid, article_id):
+        """Check if an article is bookmarked by a visitor."""
+        if not visitor_uuid:
             return False
-        return Bookmark.query.filter_by(user_id=user_id, article_id=article_id).first() is not None
+        return Bookmark.query.filter_by(visitor_uuid=visitor_uuid, article_id=article_id).first() is not None
 
     @staticmethod
-    def toggle_bookmark(user_id, article_id):
+    def toggle_bookmark(visitor_uuid, article_id):
         """Bookmark or unbookmark an article."""
-        bookmark = Bookmark.query.filter_by(user_id=user_id, article_id=article_id).first()
+        bookmark = Bookmark.query.filter_by(visitor_uuid=visitor_uuid, article_id=article_id).first()
         if bookmark:
             db.session.delete(bookmark)
             db.session.commit()
             return False  # Unbookmarked
         else:
-            bookmark = Bookmark(user_id=user_id, article_id=article_id)
+            bookmark = Bookmark(visitor_uuid=visitor_uuid, article_id=article_id)
             db.session.add(bookmark)
             db.session.commit()
             return True  # Bookmarked
 
     @staticmethod
-    def log_reading_history(user_id, article_id, time_spent=0):
-        """Record or update reading history for a user and article."""
-        if not user_id:
+    def log_reading_history(visitor_uuid, article_id, time_spent=0):
+        """Record or update reading history for a visitor and article."""
+        if not visitor_uuid:
             return
         
-        history = ReadingHistory.query.filter_by(user_id=user_id, article_id=article_id).first()
+        history = ReadingHistory.query.filter_by(visitor_uuid=visitor_uuid, article_id=article_id).first()
         if history:
             history.time_spent += time_spent
         else:
-            history = ReadingHistory(user_id=user_id, article_id=article_id, time_spent=time_spent)
+            history = ReadingHistory(visitor_uuid=visitor_uuid, article_id=article_id, time_spent=time_spent)
             db.session.add(history)
             
         db.session.commit()
 
     @staticmethod
-    def get_reading_history(user_id, limit=10):
-        """Get the user's reading history list."""
-        return ReadingHistory.query.filter_by(user_id=user_id).order_by(ReadingHistory.last_viewed.desc()).limit(limit).all()
+    def get_reading_history(visitor_uuid, limit=10):
+        """Get the visitor's reading history list."""
+        return ReadingHistory.query.filter_by(visitor_uuid=visitor_uuid).order_by(ReadingHistory.last_viewed.desc()).limit(limit).all()
 
     @staticmethod
-    def get_user_bookmarks(user_id):
-        """Get all bookmarks for a user."""
-        return Bookmark.query.filter_by(user_id=user_id).order_by(Bookmark.created_at.desc()).all()
+    def get_user_bookmarks(visitor_uuid):
+        """Get all bookmarks for a visitor."""
+        return Bookmark.query.filter_by(visitor_uuid=visitor_uuid).order_by(Bookmark.created_at.desc()).all()
 
     @staticmethod
     def get_all_categories():

@@ -36,8 +36,8 @@
       <div class="col-12 text-center py-5 text-muted">
         <i class="fa-solid fa-folder-open fs-1 mb-3"></i>
         <p class="fs-5">No articles available in this category yet.</p>
-        {% if current_user.is_moderator %}
-          <a href="{{ url_for('cms.create_article') }}" class="btn btn-success mt-2">Publish First Article</a>
+        {% if current_user.is_authenticated and current_user.is_admin %}
+          <a href="{{ url_for('admin.create_article') }}" class="btn btn-success mt-2">Publish First Article</a>
         {% endif %}
       </div>
     {% endfor %}

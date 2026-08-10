@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Create Post in c/{{ community.name }} - TerraVault Community{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="row">
+    <div class="col-lg-8 mx-auto">
+      <div class="card border-0 shadow-lg rounded-4 p-4 p-md-5 text-light" style="backdrop-filter: blur(25px); background: rgba(16, 16, 18, 0.75); border: 1px solid var(--border-glass) !important;">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-secondary border-opacity-10">
+            <h2 class="fw-bold text-success m-0"><i class="fa-solid fa-pen-nib me-2"></i> Open New Discussion</h2>
+            <a href="{{ url_for('community.view_community', slug=community.slug) }}" class="btn btn-sm btn-outline-secondary">Back to c/{{ community.name }}</a>
+          </div>
+          
+          <!-- Seeding Warning Banner -->
+          <div class="alert alert-info bg-info bg-opacity-10 border-info border-opacity-25 text-info mb-4 d-flex align-items-start gap-3 rounded-3" role="alert">
+            <i class="fa-solid fa-circle-info fs-5 mt-1"></i>
+            <div>
+              <strong class="d-block mb-1">Anonymous Contribution Mode</strong>
+              <span class="small">Your post will be published immediately under your active Explorer Handle: <strong>{{ g.visitor.display_name if g.visitor else 'Anonymous' }}</strong>. No signup or credentials required.</span>
+            </div>
+          </div>
+          
+          <form action="" method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            
+            <!-- Title -->
+            <div class="mb-4">
+              <label for="post-title" class="form-label fw-semibold text-muted small">Discussion Title</label>
+              <input type="text" class="form-control bg-black text-light border-secondary border-opacity-25" id="post-title" name="title" placeholder="What topic or mystery would you like to discuss?" required>
+            </div>
+            
+            <!-- Content -->
+            <div class="mb-4">
+              <label for="post-content" class="form-label fw-semibold text-muted small">Detailed Content</label>
+              <textarea class="form-control bg-black text-light border-secondary border-opacity-25" id="post-content" name="content" rows="8" placeholder="Provide background context, theories, or questions to kick off the thread..." required></textarea>
+            </div>
+            
+            <!-- Form Action buttons -->
+            <div class="d-flex justify-content-end gap-2 border-top border-secondary border-opacity-10 pt-4 mt-4">
+              <a href="{{ url_for('community.view_community', slug=community.slug) }}" class="btn btn-outline-secondary px-4 py-2">Cancel</a>
+              <button type="submit" class="btn btn-success px-4 py-2 fw-semibold">Publish Thread</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

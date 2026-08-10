@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, flash, request, abort
+from flask import Blueprint, render_template, redirect, url_for, flash, request, abort, g
 from flask_login import login_required, current_user
 from app.services.wiki_service import WikiService
 from app.utils.helpers import generate_toc, inject_header_ids
@@ -27,10 +27,10 @@ def article_view(slug):
     
     # Check bookmark status
     bookmarked = False
-    if current_user.is_authenticated:
-        bookmarked = WikiService.is_bookmarked(current_user.id, article.id)
+    if g.visitor:
+        bookmarked = WikiService.is_bookmarked(g.visitor.uuid, article.id)
         # Log reading history entry
-        WikiService.log_reading_history(current_user.id, article.id, time_spent=30) # default initial read weight
+        WikiService.log_reading_history(g.visitor.uuid, article.id, time_spent=30) # default initial read weight
         
     # Build breadcrumbs list
     breadcrumbs = [
@@ -52,11 +52,13 @@ def article_view(slug):
 
 
 @wiki_bp.route('/bookmark/<int:article_id>', methods=['POST'])
-@login_required
 def bookmark_toggle(article_id):
-    """Toggle bookmarks on/off for the logged in user."""
-    # In a real app we'd fetch article to verify it exists
-    is_added = WikiService.toggle_bookmark(current_user.id, article_id)
+    """Toggle bookmarks on/off for the current anonymous visitor."""
+    if not g.visitor:
+        flash('Session not established.', 'danger')
+        return redirect(request.referrer or url_for('main.home'))
+        
+    is_added = WikiService.toggle_bookmark(g.visitor.uuid, article_id)
     if is_added:
         flash('Article added to bookmarks.', 'success')
     else:

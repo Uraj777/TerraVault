@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Access - TerraVault Control Center{% endblock %}
+
+{% block content %}
+<div class="container my-5 py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-5">
+      <!-- Premium Glassmorphic Login Card -->
+      <div class="card border-0 glass-panel shadow-lg position-relative overflow-hidden p-4 rounded-4" style="backdrop-filter: blur(25px); background: rgba(16, 16, 18, 0.75);">
+        <!-- Aesthetic Glowing Accent Line -->
+        <div class="position-absolute top-0 start-0 w-100" style="height: 4px; background: linear-gradient(90deg, var(--gold-primary), var(--emerald-primary));"></div>
+        
+        <div class="card-body text-center pt-3">
+          <div class="logo-symbol mx-auto mb-3" style="width: 50px; height: 50px; border-radius: 12px; background: rgba(245, 158, 11, 0.1); border: 2px solid var(--gold-primary); box-shadow: 0 0 15px var(--gold-glow);">
+            <i class="fa-solid fa-user-shield text-warning fs-4"></i>
+          </div>
+          
+          <h2 class="h3 fw-bold mb-1 text-light">Control Center</h2>
+          <p class="text-muted small mb-4">Secure administrator authorization</p>
+          
+          <form method="POST" action="{{ url_for('admin.login') }}" novalidate>
+            {{ form.hidden_tag() }}
+            
+            <!-- Username/Email Field -->
+            <div class="mb-3 text-start">
+              <label for="username" class="form-label text-secondary small fw-semibold">Admin Username or Email</label>
+              {{ form.username(class="form-control bg-black text-white border-secondary border-opacity-25 rounded-3 py-2", placeholder="Enter username or email") }}
+              {% if form.username.errors %}
+                {% for error in form.username.errors %}
+                  <span class="text-danger small d-block mt-1"><i class="fa-solid fa-circle-exclamation me-1"></i> {{ error }}</span>
+                {% endfor %}
+              {% endif %}
+            </div>
+            
+            <!-- Password Field -->
+            <div class="mb-4 text-start">
+              <label for="password" class="form-label text-secondary small fw-semibold">Secure Password</label>
+              {{ form.password(class="form-control bg-black text-white border-secondary border-opacity-25 rounded-3 py-2", placeholder="Enter password") }}
+              {% if form.password.errors %}
+                {% for error in form.password.errors %}
+                  <span class="text-danger small d-block mt-1"><i class="fa-solid fa-circle-exclamation me-1"></i> {{ error }}</span>
+                {% endfor %}
+              {% endif %}
+            </div>
+            
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-warning w-100 py-3 text-dark fw-bold rounded-3 shadow-sm hover-grow transition-all" style="background: linear-gradient(135deg, var(--gold-primary), #d97706); border: none;">
+              <i class="fa-solid fa-key me-2"></i>Authenticate
+            </button>
+          </form>
+        </div>
+      </div>
+      
+      <div class="text-center mt-4">
+        <a href="{{ url_for('main.home') }}" class="text-muted small text-decoration-none hover-white"><i class="fa-solid fa-arrow-left-long me-1"></i> Return to Encyclopedia</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

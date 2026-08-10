@@ -35,7 +35,7 @@
         { url: 'https://images.unsplash.com/photo-1506318137071-a8e063b4bec0?auto=format&fit=crop&w=1920&q=80', primaryColor: '#6366f1', hoverColor: '#4f46e5', glowColor: 'rgba(99, 102, 241, 0.18)' }
       ];
       const hour = new Date().getHours();
-      const config = bgImages[hour];
+      const config = bgImages[hour % bgImages.length];
       document.documentElement.style.setProperty('--bg-image', 'url(' + config.url + ')');
       document.documentElement.style.setProperty('--emerald-primary', config.primaryColor);
       document.documentElement.style.setProperty('--emerald-hover', config.hoverColor);
@@ -60,7 +60,7 @@
   <meta property="og:description" content="{% block og_description %}Explore professionally curated articles, historical disasters, myths, and environmental changes.{% endblock %}" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="{{ request.url }}" />
-  <meta property="og:image" content="{% block og_image %}{{ url_for('static', filename='globe-logo.svg') }}{% endblock %}" />
+  <meta property="og:image" content="{% block og_image %}{{ url_for('static', filename='globe-logo.jpg') }}{% endblock %}" />
   
   <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}" />
   <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon-32x32.png') }}" />
@@ -79,7 +79,7 @@
     <div class="container">
       <a class="navbar-brand d-flex align-items-center" href="{{ url_for('main.home') }}">
         <div class="logo-symbol me-2">
-          <img src="{{ url_for('static', filename='globe-logo.svg') }}" alt="TerraVault" width="36" height="36" style="filter: drop-shadow(0 0 4px rgba(16, 185, 129, 0.3));">
+          <img src="{{ url_for('static', filename='globe-logo.jpg') }}" alt="TerraVault" width="36" height="36" style="border-radius: 6px; filter: drop-shadow(0 0 4px rgba(16, 185, 129, 0.3));">
         </div>
         <span class="brand-text">Terra<span class="brand-vault">Vault</span></span>
       </a>
@@ -121,49 +121,40 @@
             <i class="fa-solid fa-moon fs-5"></i>
           </button>
           
-          <!-- Auth logic -->
-          {% if current_user.is_authenticated %}
+          <!-- Visitor Identification & Admin Controls -->
+          {% if current_user.is_authenticated and current_user.is_admin %}
             <div class="dropdown">
               <a class="btn btn-outline-secondary btn-sm dropdown-toggle d-flex align-items-center gap-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa-solid fa-user"></i> {{ current_user.username }}
+                <i class="fa-solid fa-user-shield text-warning"></i> {{ current_user.username }} (Admin)
               </a>
               <ul class="dropdown-menu dropdown-menu-end shadow">
                 <li>
-                  <a class="dropdown-item" href="{{ url_for('auth.profile', username=current_user.username) }}">
-                    <i class="fa-regular fa-id-card me-2"></i> Profile
+                  <a class="dropdown-item" href="{{ url_for('admin.dashboard') }}">
+                    <i class="fa-solid fa-toolbox me-2"></i> Control Center
                   </a>
                 </li>
-                {% if current_user.is_moderator %}
-                  <li>
-                    <a class="dropdown-item" href="{{ url_for('cms.dashboard') }}">
-                      <i class="fa-solid fa-toolbox me-2"></i> CMS Dashboard
-                    </a>
-                  </li>
-                {% endif %}
                 <li><hr class="dropdown-divider"></li>
                 <li>
-                  <a class="dropdown-item text-danger" href="{{ url_for('auth.logout') }}">
+                  <a class="dropdown-item text-danger" href="{{ url_for('admin.logout') }}">
                     <i class="fa-solid fa-right-from-bracket me-2"></i> Logout
                   </a>
                 </li>
               </ul>
             </div>
           {% else %}
-            <a href="{{ url_for('auth.login') }}" class="btn btn-sm btn-outline-secondary">Log In</a>
-            <a href="{{ url_for('auth.register') }}" class="btn btn-sm btn-primary text-white">Register</a>
+            {% if g.visitor %}
+              <div class="d-flex align-items-center gap-2 bg-black bg-opacity-25 py-1 px-3 rounded-pill border border-secondary-subtle">
+                <span class="avatar-circle" style="width: 24px; height: 24px; border-radius: 50%; background-color: {{ g.visitor.avatar_color }}; display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; color: white;">
+                  <i class="fa-solid fa-compass"></i>
+                </span>
+                <span class="text-secondary small fw-semibold">{{ g.visitor.display_name }}</span>
+              </div>
+            {% endif %}
           {% endif %}
         </div>
       </div>
     </div>
   </nav>
-
-  <!-- Email Verification Banner Prompt -->
-  {% if current_user.is_authenticated and not current_user.is_verified %}
-    <div class="alert alert-warning text-center rounded-0 m-0 py-2 border-0" role="alert">
-      Your email address is unverified. 
-      <a href="{{ url_for('auth.verify_prompt') }}" class="alert-link text-decoration-underline">Verify your email now</a>.
-    </div>
-  {% endif %}
 
   <!-- Flash Messages Wrapper -->
   <div class="container my-3">
@@ -181,7 +172,9 @@
 
   <!-- Main Content Block -->
   <main class="flex-grow-1">
-    {% block content %}{% endblock %}
+    <div class="fade-in-up">
+      {% block content %}{% endblock %}
+    </div>
   </main>
 
   <!-- Footer -->
@@ -193,6 +186,7 @@
         </div>
         <div class="col-md-6 text-center text-md-end text-muted">
           <a href="{{ url_for('main.home') }}" class="text-decoration-none text-muted me-3">Home</a>
+          <a href="{{ url_for('admin.dashboard') }}" class="text-decoration-none text-muted me-3"><i class="fa-solid fa-key text-secondary me-1"></i>Admin</a>
           <a href="mailto:rajutkarsh1910@gmail.com" class="text-decoration-none text-muted">Contact Us</a>
         </div>
       </div>

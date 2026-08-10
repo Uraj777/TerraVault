@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }} - TerraVault CMS{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+  <div class="row">
+    <div class="col-lg-9 mx-auto">
+      <!-- Glassmorphic Form Card -->
+      <div class="card border-0 shadow-lg rounded-4 p-4 p-md-5 text-light" style="backdrop-filter: blur(25px); background: rgba(16, 16, 18, 0.75); border: 1px solid var(--border-glass) !important;">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom border-secondary border-opacity-10">
+            <h2 class="fw-bold text-success m-0"><i class="fa-solid fa-file-pen me-2"></i> {{ title }}</h2>
+            <a href="{{ url_for('admin.cms') }}" class="btn btn-sm btn-outline-secondary">Back to Control Center</a>
+          </div>
+          
+          <form method="POST" action="" enctype="multipart/form-data" class="needs-validation">
+            {{ form.hidden_tag() }}
+
+            <!-- Title -->
+            <div class="mb-4">
+              {{ form.title.label(class="form-label fw-semibold text-muted small") }}
+              {% if form.title.errors %}
+                {{ form.title(class="form-control bg-black text-light border-danger is-invalid") }}
+                <div class="invalid-feedback">
+                  {% for error in form.title.errors %}
+                    <span>{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ form.title(class="form-control bg-black text-light border-secondary border-opacity-25", placeholder="e.g. The Library of Alexandria") }}
+              {% endif %}
+            </div>
+
+            <!-- Summary -->
+            <div class="mb-4">
+              {{ form.summary.label(class="form-label fw-semibold text-muted small") }}
+              {% if form.summary.errors %}
+                {{ form.summary(class="form-control bg-black text-light border-danger is-invalid") }}
+                <div class="invalid-feedback">
+                  {% for error in form.summary.errors %}
+                    <span>{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ form.summary(class="form-control bg-black text-light border-secondary border-opacity-25", placeholder="e.g. A brief description of the rise, cataloging, and eventual decline of the ancient world's greatest library.") }}
+              {% endif %}
+            </div>
+
+            <!-- Category and Image Cover Row -->
+            <div class="row mb-4">
+              <div class="col-md-6 mb-3 mb-md-0">
+                {{ form.category_id.label(class="form-label fw-semibold text-muted small") }}
+                {% if form.category_id.errors %}
+                  {{ form.category_id(class="form-select bg-black text-light border-danger is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.category_id.errors %}
+                      <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  {{ form.category_id(class="form-select bg-black text-light border-secondary border-opacity-25") }}
+                {% endif %}
+              </div>
+              <div class="col-md-6">
+                {{ form.image.label(class="form-label fw-semibold text-muted small") }}
+                {% if form.image.errors %}
+                  {{ form.image(class="form-control bg-black text-light border-danger is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.image.errors %}
+                      <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  {{ form.image(class="form-control bg-black text-light border-secondary border-opacity-25") }}
+                {% endif %}
+                
+                <!-- Image Preview helper -->
+                {% if article and article.image_url %}
+                  <div class="mt-2 text-start">
+                    <span class="small text-muted">Current image:</span>
+                    {% if article.image_url.startswith('uploaded_') %}
+                      <a href="{{ url_for('static', filename='uploads/' + article.image_url) }}" target="_blank" class="small text-success text-decoration-none d-block">{{ article.image_url }}</a>
+                    {% else %}
+                      <a href="{{ url_for('static', filename=article.image_url) }}" target="_blank" class="small text-success text-decoration-none d-block">{{ article.image_url }}</a>
+                    {% endif %}
+                  </div>
+                {% endif %}
+              </div>
+            </div>
+
+            <!-- Tags -->
+            <div class="mb-4">
+              {{ form.tags.label(class="form-label fw-semibold text-muted small") }}
+              {% if form.tags.errors %}
+                {{ form.tags(class="form-control bg-black text-light border-danger is-invalid") }}
+                <div class="invalid-feedback">
+                  {% for error in form.tags.errors %}
+                    <span>{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ form.tags(class="form-control bg-black text-light border-secondary border-opacity-25", placeholder="e.g. library, history, egypt") }}
+              {% endif %}
+            </div>
+
+            <!-- Content (HTML Supported) -->
+            <div class="mb-4">
+              {{ form.content.label(class="form-label fw-semibold text-muted small") }}
+              {% if form.content.errors %}
+                {{ form.content(class="form-control bg-black text-light border-danger is-invalid", rows="15") }}
+                <div class="invalid-feedback">
+                  {% for error in form.content.errors %}
+                    <span>{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ form.content(class="form-control bg-black text-light border-secondary border-opacity-25", rows="15", placeholder="<p>Write your detailed article content here. HTML elements are allowed for formatting.</p>") }}
+              {% endif %}
+            </div>
+
+            <!-- Citations & References -->
+            <div class="mb-4">
+              {{ form.references_data.label(class="form-label fw-semibold text-muted small") }}
+              {% if form.references_data.errors %}
+                {{ form.references_data(class="form-control bg-black text-light border-danger is-invalid", rows="4") }}
+                <div class="invalid-feedback">
+                  {% for error in form.references_data.errors %}
+                    <span>{{ error }}</span>
+                  {% endfor %}
+                </div>
+              {% else %}
+                {{ form.references_data(class="form-control bg-black text-light border-secondary border-opacity-25", rows="4", placeholder="Encyclopaedia Britannica, Online Edition.\nNational Geographic Archives.") }}
+              {% endif %}
+            </div>
+
+            <!-- Publish Settings row -->
+            <div class="row align-items-center mb-4 g-3">
+              <div class="col-md-6">
+                {{ form.status.label(class="form-label fw-semibold text-muted small") }}
+                {{ form.status(class="form-select bg-black text-light border-secondary border-opacity-25") }}
+              </div>
+              <div class="col-md-6 pt-md-4">
+                <div class="form-check form-switch">
+                  {{ form.is_featured(class="form-check-input bg-black border-secondary border-opacity-25", type="checkbox", role="switch") }}
+                  {{ form.is_featured.label(class="form-check-label text-light fw-medium small") }}
+                </div>
+              </div>
+            </div>
+
+            <!-- Change Summary (Only displayed when editing existing article to log edits) -->
+            {% if article %}
+              <div class="mb-4 p-3 bg-black bg-opacity-25 rounded-3 border border-secondary border-opacity-10">
+                {{ form.change_summary.label(class="form-label fw-semibold text-warning small") }}
+                {{ form.change_summary(class="form-control bg-black text-light border-secondary border-opacity-25", placeholder="e.g. Fixed spelling errors in section 2") }}
+              </div>
+            {% endif %}
+
+            <!-- Form Action buttons -->
+            <div class="d-flex justify-content-end gap-2 border-top border-secondary border-opacity-10 pt-4 mt-4">
+              <a href="{{ url_for('admin.cms') }}" class="btn btn-outline-secondary px-4 py-2">Cancel</a>
+              {{ form.submit(class="btn btn-success px-4 py-2 fw-semibold") }}
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -43,7 +43,7 @@
           <span><i class="fa-regular fa-calendar-check me-1"></i> {{ article.created_at|datetimeformat }}</span>
           <span><i class="fa-regular fa-clock me-1"></i> {{ article.reading_time }} min read</span>
           <span><i class="fa-regular fa-eye me-1"></i> {{ article.views }} views</span>
-          <span><i class="fa-regular fa-user me-1"></i> Contributed by: <a href="{{ url_for('auth.profile', username=article.author.username) }}" class="text-success text-decoration-none fw-bold">{{ article.author.username }}</a></span>
+          <span><i class="fa-solid fa-user-shield me-1"></i> Contributed by: <span class="text-success fw-bold">{{ article.author.username }}</span></span>
         </div>
 
         <!-- Cover Image -->

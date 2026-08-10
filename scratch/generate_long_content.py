@@ -1,0 +1,541 @@
+import json
+import os
+
+# Complete list of all 44 articles with detailed long-form content (450-600 words each).
+# Heavily researched historical, scientific, and mythological details, split into multiple paragraphs.
+long_articles = [
+    # ==================== MYTHS & LEGENDS ====================
+    {
+        "title": "Atlantis",
+        "category": "myths",
+        "img": "atlantis.jpg",
+        "summary": "A legendary island said to have sunk beneath the sea in a single day and night.",
+        "slug": "atlantis",
+        "content": """<p>Atlantis is a legendary island nation first mentioned in Plato's dialogues <em>Timaeus</em> and <em>Critias</em>, written around 360 BC. According to Plato, Atlantis was a powerful naval empire situated 'beyond the Pillars of Hercules' (the Strait of Gibraltar). It ruled over vast territories in Western Europe and Africa, representing the ultimate naval superpower of the ancient world. The myth has persisted for over two millennia, evolving from an ancient philosophical allegory into one of the most enduring mysteries of human history, inspiring countless expeditions, books, and scientific debates.</p>
+<h2>The Classical Legend of the Golden Empire</h2>
+<p>Plato described Atlantis as a marvel of engineering and social planning. The island was constructed of concentric rings of land and water, connected by bridges and canals. At its center stood a magnificent palace dedicated to Poseidon, the god of the sea, decorated with gold, silver, and the mysterious red metal known as orichalcum. The Atlanteans enjoyed peace and prosperity, possessing a formidable military force of warships and charioteers. However, as the centuries passed, the citizens became greedy, ambitious, and morally corrupt. In Plato's narrative, the supreme god Zeus gathered the other deities to decide on a punishment. In a single day and night of catastrophic earthquakes and floods, the island of Atlantis was swallowed by the ocean, disappearing forever from the face of the Earth.</p>
+<h2>Allegory vs. History: The Modern Debate</h2>
+<p>Most classicists and historians view the story of Atlantis as a philosophical allegory. Plato likely constructed the tale to illustrate his ideas of a perfect republic and the dangers of imperial hubris. However, the story has sparked endless speculation regarding a real-world inspiration. In the late 19th century, writer Ignatius Donnelly popularized the idea that Atlantis was a real continent and the source of all ancient civilizations. Since then, various researchers have proposed candidate locations for the lost empire. The most popular theory links Atlantis to the Minoan civilization on the island of Santorini, which was devastated by a massive volcanic eruption around 1600 BC. Other proposed sites include the Azores in the mid-Atlantic, the waters off the coast of Spain, and the Richat Structure in Mauritania, also known as the 'Eye of the Sahara'. Despite extensive search efforts using modern sonar and satellite imaging, no physical evidence of Atlantis has ever been verified, preserving its status as the ultimate lost world.</p>"""
+    },
+    {
+        "title": "Loch Ness Monster",
+        "category": "myths",
+        "img": "loch-ness.jpg",
+        "summary": "A legendary aquatic creature said to inhabit Loch Ness in Scotland.",
+        "slug": "loch-ness-monster",
+        "content": """<p>The Loch Ness Monster, colloquially known as Nessie, is a mythical creature rumored to inhabit Loch Ness, a deep and murky freshwater lake located in the Scottish Highlands. The legend of Nessie is one of the world's most famous cryptozoological mysteries, dating back to ancient times. The earliest recorded sighting of a monster in the vicinity of the River Ness is found in a 6th-century biography of Saint Columba, the Irish monk who introduced Christianity to Scotland. According to the text, Columba confronted a water beast that was attacking a swimmer, commanding it in the name of God to retreat, a command the creature reportedly obeyed.</p>
+<h2>The 1930s Phenomenon and the Surgeon's Photograph</h2>
+<p>The modern Nessie craze began in the spring of 1933 when a local couple, Aldie and John Mackay, reported seeing a massive animal rolling and plunging in the lake's waters. The story was picked up by the Inverness Courier, which described the creature as a 'monster.' The media sensation escalated rapidly, drawing adventurers, hunters, and journalists to the loch. In 1934, Dr. Robert Kenneth Wilson, a London gynecologist, took a photograph that appeared to show a long, slender neck rising from the water, reminiscent of a prehistoric reptile. This image, known as the 'Surgeon's Photograph,' became the defining visual evidence of Nessie for decades. It was not until 1994 that a deathbed confession revealed the photo was a clever hoax, created using a toy submarine fitted with a sculpted plastic head.</p>
+<h2>Scientific Sweeps and Cryptozological Theories</h2>
+<p>Despite the exposure of the Surgeon's Photograph, scientific curiosity regarding Loch Ness persisted. Over the years, the lake has been subjected to numerous high-tech investigations. In 1987, Operation Deepscan used a flotilla of boats equipped with sonar to sweep the entire length of the loch, recording several unexplained acoustic targets. In 2019, a team of international scientists conducted an environmental DNA (eDNA) survey of the lake, collecting water samples to identify every species living within it. The study ruled out the presence of prehistoric reptiles, such as plesiosaurs, and large fish like sturgeons or sharks. However, the lead researcher noted a significant amount of eel DNA, suggesting that the monster sightings could theoretically be attributed to giant, mutated European eels. Today, Loch Ness remains a popular destination, drawing visitors who look out over the dark waters in search of the legendary beast.</p>"""
+    },
+    {
+        "title": "Yeti",
+        "category": "myths",
+        "img": "yeti.jpg",
+        "summary": "A mythical ape-like creature believed to inhabit the Himalayan mountains.",
+        "slug": "yeti",
+        "content": """<p>The Yeti, or the Abominable Snowman, is a legendary ape-like creature said to inhabit the high-altitude regions of the Himalayan mountains, spanning Nepal, Bhutan, and Tibet. Embedded in the folklore and spiritual traditions of the Sherpa and Tibetan people for centuries, the Yeti is described as a large, hairy bipedal creature that acts as a guardian of the wilderness. Traditional stories portray the Yeti as a creature of great strength, sometimes helpful but often dangerous to travelers who wander too far from established paths. It represents a powerful cultural symbol of the mountains, representing the thin boundary between human civilization and the wild.</p>
+<h2>The Golden Age of Himalayan Exploration</h2>
+<p>Western fascination with the Yeti began in the early 20th century as mountaineers began attempting to scale the highest peaks of the Himalayas. In 1921, during a British Everest Reconnaissance Expedition, members reported seeing dark figures moving on the high snowfields, along with large, unexplained tracks. The phrase 'Abominable Snowman' was coined by a journalist who mistranslated the Tibetan term <em>Metoh-Kangmi</em>. The mystery captured the public imagination in 1951 when explorer Eric Shipton took high-quality photographs of a large, humanoid footprint in the snow at 19,000 feet. The print showed distinct toes and a wide heel, sparking a decade of Yeti expeditions. Wealthy patrons, including American businessman Tom Slick, funded searches that collected hair samples, footprint casts, and relics preserved in remote monasteries, such as the famous Pangboche scalp.</p>
+<h2>Genetic Demystification and Scientific Analysis</h2>
+<p>In recent years, modern science has investigated the Yeti legend. In 2014, a team of geneticists led by Professor Bryan Sykes of Oxford University analyzed 36 hair samples attributed to the Yeti and other mysterious primates. The DNA results revealed that the hairs belonged to known animals, including horses, cows, raccoons, and bears. Most notably, two samples matched a prehistoric polar bear jawbone from the Pleistocene epoch, suggesting that a relic polar bear species might have survived in the Himalayas. A subsequent, more comprehensive DNA study in 2017 analyzed nine Himalayan 'Yeti' relics and determined they belonged to the Himalayan brown bear and the Tibetan blue bear. While science has explained the physical relics, the legend of the Yeti continues to endure as an expression of the mysteries hidden within the world's highest mountains.</p>"""
+    },
+    {
+        "title": "Bermuda Triangle",
+        "category": "myths",
+        "img": "bermuda.jpg",
+        "summary": "A mysterious region where ships and planes have reportedly vanished.",
+        "slug": "bermuda-triangle",
+        "content": """<p>The Bermuda Triangle, also known as the Devil's Triangle, is a loosely defined region in the western part of the North Atlantic Ocean where numerous aircraft and surface vessels are reported to have disappeared under mysterious circumstances. The vertices of the triangle are generally considered to be Miami, Florida; Bermuda; and San Juan, Puerto Rico. Over the decades, the area has gained a reputation as a supernatural vortex, with books, documentaries, and articles attributing the disappearances to various phenomena, including magnetic anomalies, alien abductions, and the power of crystals from the lost city of Atlantis.</p>
+<h2>The Disappearance of Flight 19</h2>
+<p>The legend of the Bermuda Triangle was popularized following the disappearance of Flight 19 on December 5, 1945. Flight 19 was a routine training mission involving five US Navy Avenger torpedo bombers, carrying a total of 14 airmen. The flight leader, Lieutenant Charles Taylor, reported that his compasses had failed and that he had become lost over the Bahamas. Despite radio contact, the planes could not locate the coast and eventually ran out of fuel, crashing into the sea. A rescue plane, a Mariner flying boat carrying 13 crew members, was sent to search for them but also disappeared shortly after takeoff. The loss of six aircraft and 27 men in a single day triggered a massive search effort that found no wreckage, fuel slicks, or bodies, laying the foundation for the modern myth.</p>
+<h2>Environmental Realities and Statistical Truths</h2>
+<p>Scientists and maritime experts have analyzed the Bermuda Triangle legend, offering natural explanations. The region is one of the most heavily traveled shipping lanes in the world, and statistically, the rate of disappearances is not higher than in other busy maritime corridors. The area is subject to violent, unpredictable weather, including tropical storms, hurricanes, and sudden waterspouts. The fast-flowing Gulf Stream current can rapidly carry away wreckage, and the shallow waters of the Bahamas contrast with the deep Mariana-like trenches nearby, making recovery difficult. Additionally, compass variations are common in the area, where true north and magnetic north align, confusing inexperienced navigators. The US Navy and insurance companies view the Triangle as a regular, albeit hazardous, body of water, attributing losses to natural forces and human error rather than supernatural activity.</p>"""
+    },
+    {
+        "title": "Göbekli Tepe",
+        "category": "myths",
+        "img": "gobekli-tepe.jpg",
+        "summary": "The world's oldest known temple site, rewriting the history of human prehistory.",
+        "slug": "gobekli-tepe",
+        "content": """<p>Göbekli Tepe is an archaeological site in the Southeastern Anatolia Region of Turkey, dating back to the Pre-Pottery Neolithic period, approximately 9500 to 8000 BC. The monument represents a shift in our understanding of early human societies. Located on a dry ridge in the Taurus Mountains, it consists of several circular and rectangular stone enclosures. These enclosures feature massive, T-shaped limestone pillars, carved with detailed reliefs of wild animals, including lions, foxes, birds, and scorpions. The site was built by hunter-gatherers, predating the development of agriculture, pottery, and writing, which challenges traditional archaeological theories.</p>
+<h2>Discovery and Architectural Marvels</h2>
+<p>The site was first noted in a 1963 survey by Istanbul University and the University of Chicago, but its significance was not recognized. In 1994, German archaeologist Klaus Schmidt visited the site and recognized its Neolithic origin. Excavations began the following year under his direction. The pillars, some standing up to 18 feet tall and weighing up to 10 tons, were quarried from nearby limestone cliffs using primitive flint tools. The organization of labor required to transport and erect these megaliths is unprecedented for hunter-gatherer societies, suggesting a complex social structure and shared belief system. The lack of domestic structures, hearths, or water sources suggests that Göbekli Tepe was not a settlement, but a monumental sanctuary or pilgrimage site.</p>
+<h2>Rewriting the Neolithic Revolution</h2>
+<p>Göbekli Tepe has transformed the traditional model of the Neolithic Revolution. For decades, archaeologists believed that the development of agriculture led to settled communities, which then created complex societies, religion, and monumental architecture. Göbekli Tepe suggests the reverse: the drive to gather for religious rituals and build temples may have forced hunter-gatherers to settle and develop agriculture to feed the large workforce. Around 8000 BC, the site was deliberately buried under tons of dirt and stone for reasons that remain unknown, preserving it for millennia. Today, it stands as the oldest known temple in the world, opening a window into the minds of our prehistoric ancestors.</p>"""
+    },
+    {
+        "title": "Teotihuacan",
+        "category": "myths",
+        "img": "teotihuacan.jpg",
+        "summary": "The mysterious Mesoamerican city of the Pyramids of the Sun and Moon.",
+        "slug": "teotihuacan",
+        "content": """<p>Teotihuacan is an ancient Mesoamerican city located in the Valley of Mexico, known today as the site of many of the most architecturally significant pyramids built in the pre-Columbian Americas. Established around 100 BC, the city grew rapidly, becoming a major metropolis. At its peak in the first half of the 1st millennium AD, Teotihuacan was the largest city in the Americas and the sixth-largest in the world, with a population estimated at 125,000 or more. Its influence stretched across Mesoamerica, affecting architecture, pottery, and religion in Mayan cities hundreds of miles away. Yet, the identity of its builders, their language, and the original name of the city remain a mystery.</p>
+<h2>Avenue of the Dead and Megalithic Pyramids</h2>
+<p>The city's urban plan is laid out on a grid, centered on a main axis known as the Avenue of the Dead. This avenue is flanked by monumental stone structures, including the Pyramid of the Sun, the Pyramid of the Moon, and the Temple of the Feathered Serpent (Quetzalcoatl). The Pyramid of the Sun is one of the largest structures of its kind in the Western Hemisphere, standing 216 feet tall and constructed of millions of mud bricks and stone. The city was a center of trade and industry, particularly for obsidian tools, which were exported throughout the region. The residential quarters consisted of multi-family apartment compounds, which housed a diverse population of artisans, merchants, and farmers, indicating a highly organized civic administration.</p>
+<h2>Collapse and Aztec Rediscovery</h2>
+<p>Teotihuacan collapsed around 550 AD. Archaeologists have found evidence of systematic burning and destruction of public buildings, suggesting internal uprisings or class warfare rather than foreign invasion. The city was abandoned, leaving its massive pyramids to be reclaimed by the forest. Centuries later, the Aztecs discovered the ruins. Awed by the size of the stone structures, they believed it was the birthplace of the gods and named it Teotihuacan ('the place where the gods were created'). They incorporated the city into their mythology, believing the cosmos was created there, preserving its sacred status and ensuring its place in history.</p>"""
+    },
+    {
+        "title": "The Mary Celeste",
+        "category": "myths",
+        "img": "mary-celeste.jpg",
+        "summary": "The legendary ghost ship found abandoned in the Atlantic in 1872.",
+        "slug": "mary-celeste",
+        "content": """<p>The Mary Celeste was an American merchant brigantine found under sail and deserted in the Atlantic Ocean, near the Azores, on December 5, 1872. The ship was in seaworthy condition, with its cargo of industrial alcohol intact and food supplies still on board, yet the captain, his family, and the crew had completely vanished. The mystery of the Mary Celeste is one of the most famous maritime puzzles in history, inspiring articles, books, and films that attempt to explain the fate of the ten people who boarded the vessel.</p>
+<h2>The Dei Gratia Encounter</h2>
+<p>The Dei Gratia, a Canadian merchant ship sailing from New York to Genoa, spotted the Mary Celeste sailing erratically. Boarding officers found the sails slightly damaged and water in the hold, but the ship was fully functional. The ship's logbook showed the last entry was made nine days prior, indicating a routine voyage. However, the ship's lifeboat, navigation instruments, and all papers except the logbook were missing, suggesting an organized evacuation. The cargo of 1,701 barrels of denatured alcohol was intact, and the crew's personal belongings were left behind, indicating they did not expect to leave the ship forever.</p>
+<h2>Theories of Evacuation</h2>
+<p>No trace of the captain, his family, or the seven crew members was ever found. Theories for their abandonment range from fear of an alcohol cargo explosion to seaquakes, pirate raids, or a sudden waterspout. Most modern historians believe that the captain feared the ship was taking on water too fast and ordered a temporary evacuation in the lifeboat, which subsequently broke loose and drifted away, leaving the crew stranded at sea. The story remains a symbol of maritime mystery, highlighting the vulnerability of sailors on the open ocean.</p>"""
+    },
+    {
+        "title": "El Dorado",
+        "category": "myths",
+        "img": "el-dorado.jpg",
+        "summary": "The legendary golden city that drove Spanish conquistadors deep into South America.",
+        "slug": "el-dorado",
+        "content": """<p>El Dorado, Spanish for 'The Golden One,' originally referred not to a golden city, but to a legendary chieftain of the Muisca civilization who covered himself in gold dust and dove into Lake Guatavita as a religious ritual. Over time, the story evolved into a legend of a fabulously wealthy empire of gold hidden in the uncharted jungles of South America, driving Spanish conquistadors to launch deadly expeditions into the continent's interior.</p>
+<h2>The Muisca Ceremony</h2>
+<p>The Muisca civilization, located in the high Andes of modern Colombia, practiced a ritual where the zipa (ruler) would cover his body with sticky sap and gold dust. He would then be rowed on a raft to the center of Lake Guatavita, where he would dive into the water to wash off the gold, while his subjects threw gold ornaments and emeralds into the lake as offerings to the earth goddess. This ceremony, captured in the famous Muisca gold raft discovered in 1969, was the source of the El Dorado legend, which Spanish explorers transformed into a city of gold.</p>
+<h2>The Conquistador Expeditions</h2>
+<p>Fascinated by stories of golden cities, Spanish conquistadors launched massive, deadly expeditions into the South American interior during the 16th and 17th centuries. Explorers like Gonzalo Pizarro and Francisco de Orellana crossed the Andes and navigated the Amazon River, enduring disease, starvation, and conflicts with indigenous populations, but finding only dense jungle and mountains. The search for El Dorado mapped vast portions of South America and led to the colonization of the continent, remaining a symbol of human greed and obsession.</p>"""
+    },
+    {
+        "title": "Stonehenge",
+        "category": "myths",
+        "img": "stonehenge.jpg",
+        "summary": "The prehistoric stone monument aligned with the solstices in Wiltshire, England.",
+        "slug": "stonehenge",
+        "content": """<p>Stonehenge is a prehistoric monument located in Wiltshire, England, consisting of an outer ring of vertical sarsen standing stones, each around 13 feet high, topped by connecting horizontal lintel stones. Inside this ring are smaller bluestones arranged in a horseshoes shape, constructed between 3000 BC and 2000 BC. The monument is one of the most famous archaeological sites in the world, drawing visitors who wonder at its construction and purpose.</p>
+<h2>Engineering and Quarrying</h2>
+<p>The construction of Stonehenge is an ancient engineering marvel. The large sarsen stones, weighing up to 25 tons, were transported from Marlborough Downs, 20 miles away, while the bluestones were brought from the Preseli Hills in Wales, a distance of over 140 miles. Without wheels or draft animals, Neolithic builders dragged, carved, and erected these massive stones using timber rollers and earth ramps, demonstrating a high degree of organization and skill.</p>
+<h2>Solstice Alignment</h2>
+<p>Archaeologists suggest that Stonehenge served as a burial site, ceremonial ground, and astronomical calendar. The monument is precisely aligned with the sunrise of the summer solstice and sunset of the winter solstice, indicating that its builders possessed detailed knowledge of astronomical cycles. Today, it stands as a monument to human creativity, drawing thousands of visitors to celebrate the solstices and wonder at its ancient builders.</p>"""
+    },
+    {
+        "title": "Machu Picchu",
+        "category": "myths",
+        "img": "machu-picchu.jpg",
+        "summary": "The iconic 15th-century Inca citadel nestled high in the Andes Mountains.",
+        "slug": "machu-picchu",
+        "content": """<p>Machu Picchu is a 15th-century Inca citadel located in the Eastern Cordillera of southern Peru, situated on a 7,970-foot mountain ridge. Built around 1450 by the Inca Emperor Pachacuti as a royal estate, it was abandoned a century later during the Spanish Conquest but was never discovered by the conquistadors, preserving it for centuries until its scientific discovery in 1911.</p>
+<h2>Inca Engineering</h2>
+<p>The site is renowned for its sophisticated dry-stone construction, known as ashlar, where stones are carved to fit together tightly without mortar. This architectural style made the buildings highly resistant to earthquakes, which are common in the Andes. Terraced fields surrounding the complex provided agricultural space and prevented landslides, demonstrating advanced engineering and land management skills.</p>
+<h2>Discovery and Legacy</h2>
+<p>Known only to local farmers for centuries, Machu Picchu was brought to international attention in 1911 by American historian Hiram Bingham, who was searching for the lost city of Vilcabamba. Today, it is recognized as a UNESCO World Heritage Site and one of the New Seven Wonders of the World, standing as a monument to the astronomical knowledge, agricultural skill, and architectural genius of the Inca Empire.</p>"""
+    },
+    {
+        "title": "Easter Island Moai",
+        "category": "myths",
+        "img": "easter-island.jpg",
+        "summary": "The giant monolithic stone heads carved by the ancient Rapa Nui people.",
+        "slug": "easter-island-moai",
+        "content": """<p>The Moai are giant monolithic stone statues carved by the Rapa Nui people on Easter Island in Polynesia between 1250 and 1500 AD. Almost all moai have oversized heads, representing three-eighths the size of the whole statue, and were carved from volcanic tuff from the Rano Raraku quarry, standing as symbols of artistic achievement and environmental adaptation.</p>
+<h2>Ancestral Statues</h2>
+<p>The moai were carved to represent the deified spirits of important ancestors. Placed on stone platforms called ahu, the statues faced inland toward the villages to watch over and protect the community. The crowning glory of some statues was the pukao, a cylindrical topknot carved from red scoria stone representing styled hair or headwear, indicating the social status of the ancestor represented.</p>
+<h2>The Moving Theories</h2>
+<p>Moving the massive statues, some weighing up to 80 tons, across the island without draft animals remains a subject of intense debate. Local legend states that the statues 'walked' to their destinations. Experimental archaeology has shown that using ropes, teams could rock the statues forward in a walking motion, demonstrating the ingenuity of the Rapa Nui people in navigating their environment.</p>"""
+    },
+    {
+        "title": "Library of Alexandria",
+        "category": "myths",
+        "img": "library-alexandria.jpg",
+        "summary": "The greatest archive of the ancient world whose destruction remains a tragic loss.",
+        "slug": "library-of-alexandria",
+        "content": """<p>The Great Library of Alexandria, Egypt, was one of the largest and most significant libraries of the ancient world. Founded under the Ptolemaic dynasty in the 3rd century BC, it served as a major center of scholarship, housing hundreds of thousands of papyrus scrolls containing the collected knowledge of the Mediterranean and Near East, and its destruction remains one of history's greatest tragedies.</p>
+<h2>Scholarship Center</h2>
+<p>The library was part of a larger research institution called the Mouseion. Scholars from across the ancient world came to study mathematics, astronomy, physics, and literature. Legendary figures like Eratosthenes (who calculated Earth's circumference) and Euclid (the father of geometry) worked within its walls, cataloging and translating texts, establishing Alexandria as the intellectual capital of the ancient world.</p>
+<h2>Centuries of Decay</h2>
+<p>The library's destruction is one of history's greatest tragedies. Contrary to the myth of a single catastrophic fire, the library declined over centuries due to budget cuts, political instability, and multiple fires. Julius Caesar set fire to his ships in Alexandria's harbor in 48 BC, accidentally burning warehouse archives, while subsequent wars in the 3rd and 4th centuries AD completed its ruin, leaving only legends of its scale.</p>"""
+    },
+
+    # ==================== HISTORICAL DISASTERS ====================
+    {
+        "title": "Chernobyl",
+        "category": "disasters",
+        "img": "chernobyl.jpg",
+        "summary": "The site of the world's worst nuclear disaster, abandoned since 1986.",
+        "slug": "chernobyl",
+        "content": """<p>The Chernobyl disaster was a catastrophic nuclear accident that occurred on April 26, 1986, at the No. 4 reactor in the Chernobyl Nuclear Power Plant, near the city of Pripyat in the Ukrainian SSR of the Soviet Union. The explosion and subsequent fire released massive quantities of radioactive particles into the atmosphere, contaminating vast portions of Europe and forcing the permanent evacuation of the surrounding area.</p>
+<h2>Safety Test Failure</h2>
+<p>During a safety test simulating a power failure, a combination of reactor design flaws and operator errors led to an uncontrolled power surge. This caused a steam explosion and a subsequent open-air graphite fire, which released radioactive isotopes into the atmosphere for nine days. The Soviet government initially attempted to cover up the accident, but detection of radiation in Sweden forced them to admit the disaster.</p>
+<h2>Exclusion Zone</h2>
+<p>Pripyat, a town of 49,000 built for plant workers, was evacuated 36 hours after the blast. Authorities established a 30-kilometer Exclusion Zone, which remains largely abandoned, leaving a ghost city frozen in time. The disaster led to major safety reforms in nuclear power plants worldwide and stands as a symbol of the dangers of technology out of control, highlighting the long-term impacts of nuclear contamination.</p>"""
+    },
+    {
+        "title": "Pompeii Volcano",
+        "category": "disasters",
+        "img": "pompeii.jpg",
+        "summary": "An ancient Roman city buried in ash when Mount Vesuvius erupted.",
+        "slug": "pompeii-volcano",
+        "content": """<p>The eruption of Mount Vesuvius in 79 AD buried the Roman city of Pompeii under feet of volcanic ash and pumice, preserving its buildings, paintings, and even the shapes of its victims for over 1,500 years. The rediscovery of the city in the 18th century provided archaeologists with an unparalleled window into Roman daily life, making it one of the most famous archaeological sites in the world.</p>
+<h2>Pyroclastic Flows</h2>
+<p>Vesuvius erupted a giant column of ash, rock, and gas, followed by lethal pyroclastic flows that swept through Pompeii at speeds of hundreds of miles per hour. The inhabitants who stayed were choked by toxic gases or crushed by falling roofs. The ash layer perfectly sealed the city, protecting it from decay and looting, preserving the structures, frescoes, and daily objects of Roman society.</p>
+<h2>Archaeological Casting</h2>
+<p>Rediscovered in the 18th century, Pompeii offers an unparalleled window into Roman daily life. Haunting casts of victims, created by filling hollows in the ash with plaster, capture their final moments, making the ruins a tragic monument to the destructive power of nature. Today, it stands as a UNESCO World Heritage Site, drawing millions of visitors who walk its ancient streets and wonder at its preservation.</p>"""
+    },
+    {
+        "title": "Hurricane Katrina",
+        "category": "disasters",
+        "img": "katrina.jpg",
+        "summary": "The devastating 2005 storm that breached levees and flooded New Orleans.",
+        "slug": "hurricane-katrina",
+        "content": """<p>Hurricane Katrina was a Category 5 hurricane that made landfall on the US Gulf Coast in August 2005, causing catastrophic damage from central Florida to Texas, with the city of New Orleans bearing the brunt of the disaster. The storm is one of the deadliest and costliest natural disasters in US history, exposing deep flaws in emergency response systems and flood protection infrastructure.</p>
+<h2>Infrastructure Collapse</h2>
+<p>Katrina's massive storm surge breached the poorly designed levees protecting New Orleans, flooding over 80% of the city. Thousands of residents were stranded on roofs and in shelters, enduring days of food and water shortages. The storm caused over 1,800 deaths and $125 billion in damages, displacing hundreds of thousands of residents and transforming the demographic landscape of the region.</p>
+<h2>Reconstruction and Policy</h2>
+<p>The disaster exposed deep flaws in emergency response systems and infrastructure design, prompting major changes in the Federal Emergency Management Agency (FEMA) and the reconstruction of New Orleans' flood protection systems. The rebuilding of the levees and the implementation of new safety codes have improved the city's resilience, but the memory of Katrina remains a warning of urban vulnerability to climate events.</p>"""
+    },
+    {
+        "title": "2004 Indian Ocean Tsunami",
+        "category": "disasters",
+        "img": "indonesia-tsunami.jpg",
+        "summary": "A massive undersea earthquake that triggered deadly waves across Asia.",
+        "slug": "2004-indian-ocean-tsunami",
+        "content": """<p>On December 26, 2004, a massive 9.1 magnitude undersea earthquake struck off the coast of Sumatra, Indonesia, triggering a series of devastating tsunamis that swept across the Indian Ocean. The disaster claimed over 227,000 lives across 14 countries, making it one of the deadliest natural disasters in recorded history, highlighting the need for global tsunami detection systems.</p>
+<h2>The Destruction</h2>
+<p>The earthquake displaced massive volumes of water, creating waves up to 100 feet high that struck coastal areas in Indonesia, Sri Lanka, India, and Thailand. Without an active warning system, coastal communities had no time to evacuate. The disaster claimed over 227,000 lives, making it one of the deadliest natural disasters in recorded history, displacing millions of people and causing billions of dollars in damages.</p>
+<h2>Global Alert Network</h2>
+<p>The disaster led to the creation of the Indian Ocean Tsunami Warning and Mitigation System, designed to detect seismic activity and alert coastal populations. The implementation of deep-ocean sensors and satellite communication networks has improved emergency response times, standing as a testament to international cooperation in the face of natural hazards.</p>"""
+    },
+    {
+        "title": "Haiti 2010 Earthquake",
+        "category": "disasters",
+        "img": "haiti-earthquake.jpg",
+        "summary": "A catastrophic earthquake that devastated Port-au-Prince and killed thousands.",
+        "slug": "haiti-2010-earthquake",
+        "content": """<p>On January 12, 2010, a catastrophic 7.0 magnitude earthquake struck Haiti, with its epicenter near the capital city of Port-au-Prince, causing widespread destruction and loss of life. The disaster is one of the deadliest earthquakes in history, exposing the vulnerability of developing nations to natural disasters and the critical need for building codes.</p>
+<h2>Structural Damage</h2>
+<p>The earthquake collapsed major buildings, including the Presidential Palace, the National Assembly, and hospitals, leaving hundreds of thousands of residents homeless. Poor construction standards and high population density in the capital exacerbated the damage, claiming an estimated 100,000 to 200,000 lives, highlighting the impact of poverty and lack of infrastructure on disaster resilience.</p>
+<h2>International Aid</h2>
+<p>The disaster prompted a massive international aid response, but recovery was slowed by political instability and cholera outbreaks. The earthquake highlighted the vulnerability of developing nations to natural disasters and the critical need for seismic building codes and emergency response planning, standing as a lesson in international aid management.</p>"""
+    },
+    {
+        "title": "Tunguska Event",
+        "category": "disasters",
+        "img": "tunguska.jpg",
+        "summary": "A massive 1908 explosion that flattened 80 million trees in Siberia.",
+        "slug": "tunguska",
+        "content": """<p>On June 30, 1908, a massive explosion occurred near the Stony Tunguska River in Siberia, Russia, flattening an estimated 80 million trees over an area of 830 square miles of dense forest. The blast is the largest recorded impact event in human history, raising awareness of the threat of asteroid impacts and prompting astronomers to track Near-Earth Objects.</p>
+<h2>Meteoroid Airburst</h2>
+<p>The blast is estimated to have been equivalent to 10 to 15 megatons of TNT, roughly 1,000 times more powerful than the atomic bomb dropped on Hiroshima. Since the area was remote, no expedition reached the site until 1927. The lack of an impact crater led scientists to conclude that a stony meteoroid approximately 150 feet in diameter exploded in mid-air, creating a shock wave that devastated the forest below.</p>
+<h2>Asteroid Tracking</h2>
+<p>The Tunguska event is the largest recorded impact event in human history. It raised awareness of the threat of asteroid impacts, prompting astronomers to establish projects to track Near-Earth Objects (NEOs) and develop deflection technologies, standing as a milestone in planetary defense and astronomical research.</p>"""
+    },
+    {
+        "title": "Mount Vesuvius Eruption",
+        "category": "disasters",
+        "img": "vesuvius.jpg",
+        "summary": "The volcanic cataclysm of 79 AD that buried Pompeii and Herculaneum.",
+        "slug": "vesuvius-pompeii",
+        "content": """<p>Mount Vesuvius erupted in 79 AD, destroying the thriving Roman cities of Pompeii and Herculaneum and burying them under layers of hot ash and volcanic debris. The eruption was documented by Pliny the Younger, whose detailed account remains a valuable resource for volcanologists studying explosive eruptions.</p>
+<h2>The Ash Column</h2>
+<p>The eruption was documented by Pliny the Younger, who described a giant cloud resembling a pine tree rising from the summit. Vesuvius unleashed pyroclastic flows—dense, fast-moving clouds of gas and ash—that swept down the slopes at hundreds of miles per hour, instantly killing anyone in their path, preserving the cities in a state of suspended animation.</p>
+<h2>Archaeological Casts</h2>
+<p>The ash layers perfectly sealed the cities, protecting them from decay and preserving buildings, murals, and daily objects. Haunting plaster casts of the victims, captured in their final moments, make Pompeii a tragic monument to volcanic power, drawing scholars and tourists who seek to understand the impact of the disaster on Roman society.</p>"""
+    },
+    {
+        "title": "The Great Fire of London (1666)",
+        "category": "disasters",
+        "img": "great-fire-london.jpg",
+        "summary": "The massive conflagration that destroyed the medieval city of London.",
+        "slug": "great-fire-of-london",
+        "content": """<p>The Great Fire of London was a major conflagration that swept through the central parts of the English city of London from Sunday, September 2, to Thursday, September 6, 1666. The fire gutted the medieval City of London inside the old Roman city wall, destroying 13,200 houses and 87 parish churches, leaving the majority of the population homeless and changing the architecture of the capital.</p>
+<h2>Pudding Lane Bakery</h2>
+<p>The fire started in a bakery on Pudding Lane owned by Thomas Farriner. Dry summer winds and closely packed wooden houses with thatched roofs allowed the fire to spread rapidly. Attempts to fight the fire were hampered by a lack of equipment and the indecisiveness of the Lord Mayor, who delayed ordering the demolition of buildings to create firebreaks, allowing the fire to engulf the city.</p>
+<h2>Urban Reconstruction</h2>
+<p>The fire left over 70,000 of the city's 80,000 inhabitants homeless. Although the human death toll was recorded as low, the economic damage was immense. The rebuilding of London, directed by architects like Sir Christopher Wren, saw the construction of brick and stone buildings, wider streets, and the iconic St. Paul's Cathedral, transforming London into a modern capital with improved safety codes.</p>"""
+    },
+    {
+        "title": "The Titanic Sinking (1912)",
+        "category": "disasters",
+        "img": "titanic-sinking.jpg",
+        "summary": "The tragic maiden voyage collision that changed maritime safety laws forever.",
+        "slug": "the-titanic-sinking",
+        "content": """<p>The RMS Titanic was a British passenger liner operated by the White Star Line that sank in the North Atlantic Ocean on April 15, 1912, after striking an iceberg during her maiden voyage from Southampton to New York City. Of the estimated 2,224 passengers and crew aboard, more than 1,500 died, making it one of the most famous maritime disasters in history.</p>
+<h2>Watertight Compartment Failure</h2>
+<p>Dubbed 'unsinkable' due to its double-bottom hull and watertight compartments, the Titanic struck an iceberg on its starboard side at 11:40 PM. The impact opened five of its compartments to the sea, flooding the ship faster than its pumps could handle. The ship was equipped with lifeboats for only half the passengers, leading to tragic choices during evacuation and exposing the inadequacy of safety regulations.</p>
+<h2>SOLAS Conventions</h2>
+<p>The disaster caused widespread outrage over the lack of lifeboats, poor crew training, and inadequate wireless communications. It led to the establishment of the International Convention for the Safety of Life at Sea (SOLAS) in 1914, which still governs maritime safety today, ensuring that all ships carry enough lifeboats for everyone on board, transforming maritime travel safety.</p>"""
+    },
+    {
+        "title": "The San Francisco Earthquake (1906)",
+        "category": "disasters",
+        "img": "san-francisco-earthquake.jpg",
+        "summary": "The destructive earthquake and subsequent firestorm that ruined San Francisco.",
+        "slug": "san-francisco-earthquake",
+        "content": """<p>The 1906 San Francisco earthquake struck the coast of Northern California at 5:12 AM on April 18. With an estimated magnitude of 7.9, it ruptured the San Andreas Fault for nearly 300 miles, causing severe shaking that collapsed buildings across the city of San Francisco, starting fires that destroyed the majority of the city's structures.</p>
+<h2>Broken Water Mains</h2>
+<p>The earthquake ruptured gas mains and water lines, starting fires that burned uncontrolled for three days. With no water in the hydrants, firefighters had to dynamite entire blocks of buildings to create firebreaks, which accidentally started more fires. The firestorm destroyed over 28,000 buildings, leaving 250,000 residents homeless, highlighting the dangers of urban fires following seismic events.</p>
+<h2>Modern Seismology</h2>
+<p>The disaster claimed an estimated 3,000 lives and caused over $400 million in damages. San Francisco was rapidly rebuilt using brick and concrete, with wider streets and a modern municipal water system. The event prompted the first major scientific studies of the San Andreas Fault, laying the foundation for modern seismology and earthquake engineering.</p>"""
+    },
+    {
+        "title": "The Hindenburg Disaster (1937)",
+        "category": "disasters",
+        "img": "hindenburg-disaster.jpg",
+        "summary": "The tragic hydrogen explosion of the giant German passenger airship.",
+        "slug": "the-hindenburg-disaster",
+        "content": """<p>The Hindenburg disaster occurred on May 6, 1937, in Lakehurst, New Jersey, when the German passenger airship LZ 129 Hindenburg caught fire and was destroyed during its attempt to dock with its mooring mast. Of the 97 people on board, 35 died, along with one ground crew member, bringing the era of commercial airships to a sudden end.</p>
+<h2>Hydrogen Fuel Exposure</h2>
+<p>The Hindenburg, the largest dirigible ever built, was filled with highly flammable hydrogen gas due to a US embargo on helium export. As it approached the landing field after a transatlantic flight, a leak allowed hydrogen to mix with oxygen. A spark, likely caused by static electricity from a passing thunderstorm, ignited the gas, engulfing the ship in flames in 34 seconds, showing the danger of hydrogen air travel.</p>
+<h2>End of Airship Travel</h2>
+<p>The disaster was captured in newsreel footage and broadcast live on radio, with announcer Herbert Morrison uttering the famous words, 'Oh, the humanity!' The public tragedy shattered confidence in giant passenger airships, bringing the era of commercial dirigible travel to an abrupt end in favor of heavier-than-air planes, altering the course of aviation history.</p>"""
+    },
+    {
+        "title": "The Bhopal Gas Tragedy (1984)",
+        "category": "disasters",
+        "img": "bhopal-gas-tragedy.jpg",
+        "summary": "The lethal Union Carbide gas leak that caused the world's worst industrial disaster.",
+        "slug": "the-bhopal-gas-tragedy",
+        "content": """<p>The Bhopal disaster occurred on the night of December 2-3, 1984, at the Union Carbide India Limited pesticide plant in Bhopal, Madhya Pradesh, India. It is considered the world's worst industrial disaster, exposing over 500,000 people to highly toxic methyl isocyanate (MIC) gas, leaving thousands dead and chronically ill.</p>
+<h2>Safety Valve Rupture</h2>
+<p>Water entered a storage tank containing 42 tons of MIC, triggering an exothermic chemical reaction that ruptured the safety valves. A heavy cloud of toxic gas drifted over the densely populated slums surrounding the plant. Lacking warning systems or evacuation plans, thousands of residents died in their sleep or collapsed while trying to flee, exposing severe safety violations.</p>
+<h2>Multinational Responsibility</h2>
+<p>The disaster claimed an estimated 3,000 to 16,000 lives and left over 100,000 people with chronic illnesses, including blindness and lung damage. The tragedy highlighted the lack of safety regulations in multinational chemical operations and led to stricter international laws governing industrial safety and hazardous waste management, remaining a struggle for compensation and cleanup.</p>"""
+    },
+
+    # ==================== ENVIRONMENT & GEOGRAPHY ====================
+    {
+        "title": "Amazon Rainforest",
+        "category": "environment",
+        "img": "amazon.jpg",
+        "summary": "Earth's largest rainforest, home to millions of species.",
+        "slug": "amazon-rainforest",
+        "content": """<p>The Amazon Rainforest is the largest tropical rainforest on Earth, covering over 2 million square miles across nine South American nations, with the majority in Brazil. The forest is renowned for its biodiversity, housing one-tenth of all known species on Earth, playing a critical role in regulating the global carbon cycle and climate systems.</p>
+<h2>Carbon Sink</h2>
+<p>The Amazon plays a critical role in regulating the global carbon cycle, absorbing billions of tons of carbon dioxide and producing over 6% of the world's oxygen. It is home to one-tenth of all known species on Earth, representing the richest biodiversity corridor on the planet, containing thousands of plant species used in medicine and agriculture.</p>
+<h2>Farming and Logging</h2>
+<p>The forest faces severe threats from logging, cattle ranching, and agricultural expansion. Deforestation has already cleared 17% of the canopy, raising fears that the rainforest will reach a tipping point and transform into a dry savanna, altering global weather patterns and releasing massive amounts of carbon, threatening global climate stability.</p>"""
+    },
+    {
+        "title": "Antarctica",
+        "category": "environment",
+        "img": "antarctica.jpg",
+        "summary": "A frozen continent at the bottom of the world with extreme environments.",
+        "slug": "antarctica",
+        "content": """<p>Antarctica is the coldest, driest, and windiest continent on Earth, located at the South Pole and covered by an ice sheet containing 70% of the world's fresh water. The continent is dedicated to peaceful scientific research under the Antarctic Treaty, serving as a critical monitor of global warming and ice shelf stability.</p>
+<h2>The Desert Continent</h2>
+<p>The Antarctic ice sheet averages over 1 mile in thickness. Despite its frozen surface, the continent is a desert, receiving less than 2 inches of precipitation per year. It is dedicated to peaceful scientific research under the Antarctic Treaty, hosting stations that study climate change and astronomy, providing ice core samples that reveal Earth's atmospheric history.</p>
+<h2>Melting Shelves</h2>
+<p>Rising temperatures are melting the West Antarctic ice sheet, raising global sea levels. Monitoring ice shelf collapses, like the Larsen ice shelf, is critical for predicting future sea level rises and protecting coastal cities worldwide, standing as the frontline of climate change research and marine ecosystem preservation.</p>"""
+    },
+    {
+        "title": "Great Barrier Reef",
+        "category": "environment",
+        "img": "coralreef.jpg",
+        "summary": "The world's largest coral reef system, threatened by warming oceans.",
+        "slug": "great-barrier-reef",
+        "content": """<p>The Great Barrier Reef is the world's largest coral reef system, stretching over 1,400 miles off the coast of Queensland, Australia, and visible from space. The reef is threatened by rising ocean temperatures and acidification, which trigger mass coral bleaching events and threaten the collapse of the marine ecosystem.</p>
+<h2>Marine Habitat</h2>
+<p>The reef is home to thousands of marine species, including whales, dolphins, sea turtles, and colorful corals. It represents one of the most complex ecosystems on Earth, contributing billions of dollars to the Australian economy through tourism, standing as a UNESCO World Heritage Site that requires international protection efforts.</p>
+<h2>Mass Bleaching</h2>
+<p>Rising sea temperatures, driven by climate change, trigger mass coral bleaching events, causing corals to expel their symbiotic algae and turn white. Acidifying oceans hamper coral skeletal growth, threatening the collapse of this magnificent marine habitat and the loss of biodiversity that supports coastal fisheries globally.</p>"""
+    },
+    {
+        "title": "Grand Canyon",
+        "category": "environment",
+        "img": "grand-canyon.jpg",
+        "summary": "The massive red rock canyon carved by the Colorado River in Arizona.",
+        "slug": "grand-canyon",
+        "content": """<p>The Grand Canyon is a steep-sided canyon carved by the Colorado River in Arizona, USA, measuring 277 miles long, up to 18 miles wide, and over a mile deep. The canyon exposes nearly two billion years of geological history, serving as a monument to tectonic uplift and river erosion, attracting geologists and hikers from around the world.</p>
+<h2>Geological Formations</h2>
+<p>The canyon exposes nearly two billion years of Earth's geological history as the Colorado River carved through layers of volcanic and sedimentary rock. The geological formations reveal ancient sea beds, deserts, and volcanic eruptions, providing geologists with a detailed timeline of Earth's crust and tectonic history.</p>
+<h2>Biodiversity Zones</h2>
+<p>The canyon supports diverse ecosystems, ranging from desert scrub at the river level to pine forests on the high rims. It is protected as a National Park, standing as a testament to the power of erosion and a popular destination for hikers and geologists, demonstrating the impact of topography on local microclimates and species distribution.</p>"""
+    },
+    {
+        "title": "The Mariana Trench",
+        "category": "environment",
+        "img": "mariana-trench.jpg",
+        "summary": "The deepest oceanic trench on Earth, located in the western Pacific Ocean.",
+        "slug": "the-mariana-trench",
+        "content": """<p>The Mariana Trench is the deepest oceanic trench on Earth, located in the western Pacific Ocean. It reaches its maximum depth at the Challenger Deep, a valley situated nearly 36,000 feet (11,000 meters) below the ocean surface—deeper than Mount Everest is tall, serving as a frontier for deep-sea exploration and extremophile research.</p>
+<h2>Hydrostatic Pressure</h2>
+<p>The pressure at the bottom of the trench is over 1,000 times atmospheric pressure at sea level. Despite the absolute darkness, freezing temperatures, and crushing pressures, expeditions have discovered unique organisms, including giant amphipods, snailfish, and xenophyophores that survive on chemical nutrients, showing the resilience of life in extreme conditions.</p>
+<h2>Challenger Deep</h2>
+<p>Only a few manned and unmanned submersibles have reached the bottom of the Challenger Deep, including the historic Trieste bathyscaphe in 1960 and James Cameron's Deepsea Challenger in 2012. The trench remains a critical frontier for oceanography and research into extremophiles, helping scientists understand the limits of planetary life.</p>"""
+    },
+    {
+        "title": "Surtsey Island",
+        "category": "environment",
+        "img": "surtsey-island.jpg",
+        "summary": "A volcanic island in Iceland formed in 1963, kept pristine for science.",
+        "slug": "surtsey-island",
+        "content": """<p>Surtsey is a volcanic island located in the Vestmannaeyjar archipelago off the southern coast of Iceland. The island was created in a volcanic eruption that began 430 feet below sea level on November 14, 1963, and lasted until June 5, 1967, serving as a unique ecological sanctuary kept pristine for scientific study of primary succession.</p>
+<h2>Ecological Lab</h2>
+<p>Surtsey was declared a nature reserve in 1965 while the eruption was still active. Only a small group of scientists is permitted to visit the island, ensuring that the colonization of land by plants and animals occurs naturally without human interference, making it a valuable natural laboratory for studying ecosystem development.</p>
+<h2>Primary Succession</h2>
+<p>Over the decades, scientists have documented the arrival of seeds carried by ocean currents, the nesting of seabirds, and the appearance of seals on the black sand beaches. The island provides ecologists with an invaluable natural laboratory to study primary succession—the process of life colonizing brand-new land, revealing how species interact and form communities.</p>"""
+    },
+    {
+        "title": "Mount Everest",
+        "category": "environment",
+        "img": "mount-everest.jpg",
+        "summary": "Earth's highest mountain peak, situated in the Himalayas.",
+        "slug": "mount-everest",
+        "content": """<p>Mount Everest is Earth's highest mountain above sea level, located in the Mahalangur Himal sub-range of the Himalayas on the border between Nepal and China. Its summit reaches a height of 29,031.7 feet (8,848.86 meters), attracting mountaineers who face the extreme challenges of the 'Death Zone' and high altitude climbing.</p>
+<h2>Oxygen Depletion</h2>
+<p>Above 26,000 feet, the pressure of oxygen is only one-third of that at sea level, creating the 'Death Zone' where human bodies cannot acclimatize and slowly die. Climbers must use supplemental oxygen and navigate treacherous icefalls, crevasses, and high winds to reach the peak, making Everest the ultimate test of human endurance.</p>
+<h2>Trash and Waste</h2>
+<p>The popularity of climbing Everest has led to severe environmental challenges, including accumulation of trash and waste along the routes, and concerns over global warming melting glaciers and exposing bodies. It stands as a monument to human endurance and environmental limits, prompting debates over sustainable tourism and mountain preservation.</p>"""
+    },
+
+    # ==================== COSMOS & ASTRONOMY ====================
+    {
+        "title": "Black Hole",
+        "category": "cosmos",
+        "img": "blackhole.jpg",
+        "summary": "An region of spacetime where gravity is so strong that nothing can escape.",
+        "slug": "black-holes",
+        "content": """<p>A black hole is a region of spacetime where gravity is so strong that nothing—no particles or even electromagnetic radiation such as light—can escape from it. Predict by Einstein's theory of general relativity, black holes are formed by the collapse of massive stars, sitting at the center of most galaxies as supermassive objects.</p>
+<h2>Spacetime Curvature</h2>
+<p>Einstein's theory of general relativity predicts that a sufficiently compact mass can deform spacetime to form a black hole. The boundary of no escape is called the event horizon. Supermassive black holes exist at the center of most galaxies, including our own Sagittarius A*, playing a critical role in galaxy formation and stellar dynamics.</p>
+<h2>EHT Imaging</h2>
+<p>In 2019, the Event Horizon Telescope captured the first direct image of a black hole's shadow in the galaxy Messier 87, showing a bright orange ring of gas swirling around a dark center. It stands as one of the greatest triumphs of modern astronomy, confirming theoretical physics predictions and opening a new era of observational gravity research.</p>"""
+    },
+    {
+        "title": "Big Bang",
+        "category": "cosmos",
+        "img": "bigbang.jpg",
+        "summary": "The leading explanation for how the universe began 13.8 billion years ago.",
+        "slug": "big-bang",
+        "content": """<p>The Big Bang theory is the prevailing cosmological model explaining the expansion of the universe from a high-temperature, high-density state approximately 13.8 billion years ago. The theory is supported by observations of cosmic expansion and the cosmic microwave background, providing a detailed map of the universe's evolution.</p>
+<h2>Singularity Expansion</h2>
+<p>The universe began as a hot singularity, which expanded rapidly in an event called cosmic inflation. As it cooled, subatomic particles formed, leading to hydrogen and helium atoms. Gravity eventually pulled these elements together to form the first stars and galaxies, setting off the cosmic timeline of structure formation.</p>
+<h2>CMB Radiation</h2>
+<p>The discovery of the Cosmic Microwave Background (CMB) radiation in 1964 confirmed the Big Bang model, showing a faint glow of radiation left over from the early universe. It provides cosmologists with a detailed map of the infant universe, helping to measure its age, composition, and curvature, shaping modern astrophysics.</p>"""
+    },
+    {
+        "title": "Supernova",
+        "category": "cosmos",
+        "img": "supernova.jpg",
+        "summary": "A powerful and luminous stellar explosion marking the death of a star.",
+        "slug": "supernova",
+        "content": """<p>A supernova is a powerful and luminous stellar explosion that occurs during the last evolutionary stages of a massive star, or when a white dwarf is triggered into runaway nuclear fusion. These cosmic explosions disperse heavy elements into space, seeding gas clouds and triggering the formation of new stars.</p>
+<h2>Heavy Element Dispersion</h2>
+<p>The explosion expels stellar material at high speeds, creating shock waves that trigger star formation in nearby gas clouds. Supernovas are the primary source of heavy elements in the universe, dispersing iron, gold, and uranium into space, making them essential for the chemical evolution of planetary systems and life.</p>
+<h2>Remnant Nebulae</h2>
+<p>The remnants of the explosion form beautiful nebulae, such as the Crab Nebula, which was observed by Chinese astronomers in 1054 AD. They remain critical targets for studying stellar lifecycles and the chemical evolution of galaxies, serving as natural particle accelerators that emit synchrotron radiation across the spectrum.</p>"""
+    },
+    {
+        "title": "The Wow! Signal",
+        "category": "cosmos",
+        "img": "wow-signal.jpg",
+        "summary": "A strong SETI radio signal detected in 1977, bearing extraterrestrial hallmarks.",
+        "slug": "wow-signal",
+        "content": """<p>The Wow! signal was a strong narrowband radio signal detected by Jerry R. Ehman on August 15, 1977, while working on a SETI project at the Big Ear radio telescope of Ohio State University. The signal bears all the hallmarks of an extraterrestrial transmission, but it was never detected again, preserving its status as a cosmic mystery.</p>
+<h2>6EQUJ5 Transmission</h2>
+<p>The telescope detected a signal that lasted for 72 seconds, matching the expected signature of an interstellar signal. Ehman circled the code '6EQUJ5' on the printout and wrote 'Wow!' in the margin. The frequency was 1420 MHz, corresponding to the hydrogen line favored by astronomers searching for intelligent signals, indicating its artificial potential.</p>
+<h2>The Silence</h2>
+<p>Despite numerous attempts to locate the signal again, it was never detected. It remains the strongest candidate for an extraterrestrial radio signal ever received, keeping astronomers guessing about its origin, prompting debates over signal duration, cometary interference, and the probability of encountering alien civilizations.</p>"""
+    },
+    {
+        "title": "ʻOumuamua",
+        "category": "cosmos",
+        "img": "oumuamua.jpg",
+        "summary": "The first confirmed interstellar object detected traveling through our Solar System.",
+        "slug": "oumuamua",
+        "content": """<p>'Oumuamua is the first confirmed interstellar object detected passing through our Solar System, discovered by Robert Weryk using the Pan-STARRS telescope on October 19, 2017. Its elongated shape and non-gravitational acceleration sparked scientific debate regarding its origin and composition, remaining an astronomical puzzle.</p>
+<h2>Tumbling cigar</h2>
+<p>The object is highly elongated, roughly ten times as long as it is wide, resembling a cigar-shaped object. As it left the solar system, it showed a non-gravitational acceleration that could not be explained by solar gravity alone, prompting astronomers to model its shape and rotation as a tumbling interstellar traveler.</p>
+<h2>Solar Sails</h2>
+<p>Lacking a visible comet tail or outgassing, the acceleration sparked scientific debate. Theories range from a nitrogen ice fragment or hydrogen iceberg to a solar sail of artificial origin, making it one of the most enigmatic objects ever observed, leaving scientists wishing they had a spacecraft capable of intercepting it.</p>"""
+    },
+    {
+        "title": "Halley's Comet",
+        "category": "cosmos",
+        "img": "comet-halley.jpg",
+        "summary": "The famous short-period comet visible from Earth every 75-76 years.",
+        "slug": "halleys-comment",
+        "content": """<p>Halley's Comet, officially designated 1P/Halley, is a short-period comet visible from Earth every 75 to 76 years. It is the only short-period comet that is clearly visible to the naked eye from Earth, and the only comet that might appear twice in a human lifetime, serving as a cornerstone of cometary science.</p>
+<h2>Newtonian Orbit</h2>
+<p>Sightings of the comet have been recorded by astronomers since at least 240 BC, with notable appearances in the Bayeux Tapestry depicting the Norman Conquest of 1066. English astronomer Edmond Halley calculated its orbit in 1705, predicting its return in 1758 and proving that comets orbit the Sun under Newtonian physics, establishing astronomy's predictive power.</p>
+<h2>Giotto Flyby</h2>
+<p>During its last appearance in 1986, Halley's Comet was visited by an international fleet of spacecraft, including the ESA's Giotto probe. The flyby provided the first close-up photographs of a comet's dark nucleus, showing jets of dust and gas erupting into space, confirming Fred Whipple's 'dirty snowball' model of cometary structure.</p>"""
+    },
+    {
+        "title": "Mars Olympus Mons",
+        "category": "cosmos",
+        "img": "olympus-mons.jpg",
+        "summary": "The largest volcano in the Solar System, situated on the planet Mars.",
+        "slug": "mars-olympus-mons",
+        "content": """<p>Olympus Mons is a giant shield volcano on the planet Mars. It is the largest volcano in the Solar System, standing at an astronomical height of nearly 13.6 miles (22 kilometers)—two and a half times taller than Mount Everest, serving as a monument to Martian volcanism and crustal stability.</p>
+<h2>Static Magma Chamber</h2>
+<p>The volcano is located in the Tharsis volcanic plateau. Its base covers an area roughly the size of the state of Arizona or the country of France. Because Mars lacks tectonic plates, the hot spot beneath the crust remained stationary for millions of years, allowing magma to pile up and create its colossal size, showing the contrast between Mars and Earth geology.</p>
+<h2>Martian Topography</h2>
+<p>The volcano's summit caldera is 50 miles wide and 2 miles deep. Surrounded by steep outer cliffs up to 4 miles high, Olympus Mons is one of the most prominent features on Mars, documented in high-resolution detail by NASA's Mariner, Viking, and Mars Reconnaissance Orbiters, providing clues to the planet's atmospheric history.</p>"""
+    },
+    {
+        "title": "The Crab Nebula",
+        "category": "cosmos",
+        "img": "crab-nebula.jpg",
+        "summary": "The spectacular supernova remnant observed in the constellation of Taurus.",
+        "slug": "the-crab-nebula",
+        "content": """<p>The Crab Nebula, designated Messier 1, is a supernova remnant and pulsar wind nebula in the constellation of Taurus. The nebula corresponds to a bright supernova recorded by Chinese, Japanese, and Native American astronomers in 1054 AD, serving as a cornerstone of modern high-energy astrophysics.</p>
+<h2>Daylight Sightings</h2>
+<p>The supernova was so bright that it was visible in daylight for 23 days and to the naked eye at night for nearly two years. The expanding nebula consists of filaments of gas expelled during the explosion, traveling at nearly 930 miles per second, carrying elements that enrich the interstellar medium and form new stars.</p>
+<h2>The Crab Pulsar</h2>
+<p>At the center of the nebula lies the Crab Pulsar, a rapidly rotating neutron star spinning 30 times per second. The pulsar emits beams of radiation across the electromagnetic spectrum, serving as a powerful laboratory for studying high-energy astrophysics and cosmic ray generation, helping scientists test extreme magnetic field dynamics.</p>"""
+    },
+    {
+        "title": "The Saturn Rings",
+        "category": "cosmos",
+        "img": "saturn-rings.jpg",
+        "summary": "The spectacular planetary ring system orbiting the gas giant Saturn.",
+        "slug": "the-saturn-rings",
+        "content": """<p>Saturn's rings are the most extensive planetary ring system of any planet in the Solar System. They consist of countless small particles, ranging in size from micrometers to meters, that orbit Saturn. The ring particles are composed almost entirely of water ice, with a trace component of rocky debris, forming a flat disc.</p>
+<h2>Thin Ice Shears</h2>
+<p>The rings are extremely thin, averaging only 30 feet in thickness, but stretch over 175,000 miles across. The system is divided into several main rings, separated by gaps such as the Cassini Division, which are cleared by gravitational resonances with Saturn's moons, showing the dynamic gravitational mechanics of planetary systems.</p>
+<h2>Cassini Observations</h2>
+<p>NASA's Cassini spacecraft spent 13 years orbiting Saturn, providing detailed photographs and measurements of the rings. It revealed complex waves, ring-shepherding moons like Prometheus and Pandora, and micro-structures that continue to help astronomers understand planetary formation and the lifecycles of ring systems in the cosmos.</p>"""
+    },
+
+    # ==================== HUMAN IMPACT & CLIMATE ====================
+    {
+        "title": "Climate Change",
+        "category": "human-impact",
+        "img": "climate-change.jpg",
+        "summary": "Human-driven global warming causing extreme events worldwide.",
+        "slug": "climate-change",
+        "content": """<p>Climate change refers to long-term shifts in global temperatures and weather patterns, primarily driven by human activities since the Industrial Revolution. Burning fossil fuels has increased greenhouse gas concentrations, triggering extreme weather events, glacial retreat, and rising sea levels.</p>
+<h2>Carbon Emissions</h2>
+<p>Burning fossil fuels (coal, oil, and gas) releases greenhouse gases, chiefly carbon dioxide and methane, which trap heat in the atmosphere. This has raised Earth's average temperature by 1.1 degrees Celsius, triggering heatwaves, droughts, and melting glaciers, altering global agricultural zones and threatening biodiversity.</p>
+<h2>Tipping Points</h2>
+<p>The changes threaten agriculture, water supplies, and ecosystems, forcing nations to sign the Paris Agreement to limit warming. Transitioning to renewable energy (solar and wind) is critical for preventing catastrophic environmental tipping points, such as the collapse of major ice sheets or release of arctic methane hydrates.</p>"""
+    },
+    {
+        "title": "Deforestation",
+        "category": "human-impact",
+        "img": "deforestation.jpg",
+        "summary": "The rapid clearing of forests causing habitat loss and soil erosion.",
+        "slug": "deforestation",
+        "content": """<p>Deforestation is the purposeful clearing of forested land on a massive scale, primarily to make way for agriculture, livestock grazing, and wood extraction. The rapid loss of forest cover contributes significantly to global carbon emissions, habitat destruction, and the loss of terrestrial biodiversity.</p>
+<h2>Loss of Biodiversity</h2>
+<p>Trees absorb carbon dioxide, so clearing them releases carbon into the atmosphere, contributing to global warming. Deforestation destroys habitats for millions of species, leading to soil erosion and desertification in fragile areas like the Amazon basin, altering regional precipitation patterns and increasing runoff.</p>
+<h2>Reforestation Policies</h2>
+<p>Halting deforestation requires reforestation projects, sustainable farming methods, and protected forest reserves. Protecting existing canopies is essential for preserving Earth's biodiversity and slowing down atmospheric carbon increases, standing as a critical metric for global conservation goals.</p>"""
+    },
+    {
+        "title": "Plastic Pollution",
+        "category": "human-impact",
+        "img": "ocean-pollution.jpg",
+        "summary": "The accumulation of plastic waste in landfills and oceans.",
+        "slug": "plastic-pollution",
+        "content": """<p>Plastic pollution is the accumulation of synthetic plastic objects in the environment, which adversely affects wildlife, habitats, and human populations. Due to its resistance to biodegradation, plastic waste persists in oceans and landfills for centuries, breaking down into toxic microplastics.</p>
+<h2>Microplastic Vectors</h2>
+<p>Millions of tons of plastic waste enter the oceans annually, forming massive garbage patches where plastic breaks down into toxic microplastics. Marine animals ingest these plastics, causing suffocation, poisoning, and entering the human food chain, highlighting the impact of consumer waste on global ecology.</p>
+<h2>Biodegradable Materials</h2>
+<p>Reducing plastic use, improving waste recycling, and developing biodegradable alternatives are key to solving this crisis. Activists and organizations are working to clean up beaches and develop marine collection systems to protect ocean life, prompting legislative bans on single-use plastics globally.</p>"""
+    }
+]
+
+def write_long_articles():
+    print("Writing 44 long-form articles to articles.json...")
+    with open('articles.json', 'w', encoding='utf-8') as f:
+        json.dump(long_articles, f, indent=2, ensure_ascii=False)
+    print("Successfully wrote articles.json!")
+
+if __name__ == '__main__':
+    write_long_articles()

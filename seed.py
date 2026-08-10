@@ -200,7 +200,27 @@ def clean_articles_json():
 def seed_db():
     app = create_app()
     with app.app_context():
+        print("Creating all database tables...")
+        db.create_all()
         print("Clearing existing database contents...")
+        
+        # New community tables
+        from app.models.community import (
+            AnonymousVisitor, Community, Discussion, Comment, Vote, Report,
+            NewsletterSubscriber, AuditLog, PageViewMetric, SearchMetric
+        )
+        db.session.query(Report).delete()
+        db.session.query(Vote).delete()
+        db.session.query(Comment).delete()
+        db.session.query(Discussion).delete()
+        db.session.query(Community).delete()
+        db.session.query(AnonymousVisitor).delete()
+        db.session.query(NewsletterSubscriber).delete()
+        db.session.query(AuditLog).delete()
+        db.session.query(PageViewMetric).delete()
+        db.session.query(SearchMetric).delete()
+        
+        # Old tables
         db.session.query(Bookmark).delete()
         db.session.query(ReadingHistory).delete()
         db.session.query(Draft).delete()
@@ -217,10 +237,8 @@ def seed_db():
         
         print("Seeding Roles...")
         roles_data = [
-            {'name': 'Guest', 'description': 'Unauthenticated visitor (read-only)'},
-            {'name': 'User', 'description': 'Standard registered community member'},
-            {'name': 'Moderator', 'description': 'Content reviewer and user monitor'},
-            {'name': 'Admin', 'description': 'Global platform administrator'}
+            {'name': 'Admin', 'description': 'Global platform administrator'},
+            {'name': 'Guest', 'description': 'Visitor (read-only)'}
         ]
         
         roles_dict = {}
@@ -230,7 +248,7 @@ def seed_db():
             roles_dict[r_data['name']] = role
         db.session.commit()
         
-        print("Seeding Users...")
+        print("Seeding Admin User...")
         # Create Admin User
         admin = User(username='admin', email='admin@terravault.com', role_id=roles_dict['Admin'].id, is_verified=True, reputation=100)
         admin.set_password('admin123')
@@ -240,25 +258,6 @@ def seed_db():
         # Create Profile
         admin_profile = Profile(user_id=admin.id, bio="TerraVault Global System Administrator.", location="Global")
         db.session.add(admin_profile)
-        
-        # Create Moderator User
-        mod = User(username='moderator', email='mod@terravault.com', role_id=roles_dict['Moderator'].id, is_verified=True, reputation=50)
-        mod.set_password('mod123')
-        db.session.add(mod)
-        db.session.flush()
-        
-        mod_profile = Profile(user_id=mod.id, bio="TerraVault Chief Editor & Content Reviewer.", location="London, UK")
-        db.session.add(mod_profile)
-        
-        # Create Standard User
-        user = User(username='explorer_bob', email='bob@gmail.com', role_id=roles_dict['User'].id, is_verified=True, reputation=15)
-        user.set_password('bob123')
-        db.session.add(user)
-        db.session.flush()
-        
-        bob_profile = Profile(user_id=user.id, bio="Curious explorer fascinated by volcanic history and space anomalies.", location="New York, USA")
-        db.session.add(bob_profile)
-        
         db.session.commit()
         
         print("Seeding Categories...")
@@ -285,14 +284,8 @@ def seed_db():
             category = categories_dict.get(cat_slug)
             
             if not category:
-                # Default to myths if category mapping fails
                 category = categories_dict['myths']
                 
-            # Check for rich content override
-            slug = art.get('slug')
-            article_content = art.get('content')
-            
-            # Simple reference seeds
             ref_list = [
                 "Encyclopaedia Britannica, Online Edition.",
                 "National Geographic Historical Archives.",
@@ -300,26 +293,119 @@ def seed_db():
             ]
             ref_data = "\n".join(ref_list)
             
-            # Generate article
-            # Alternate authors between admin and mod
-            author_id = admin.id if len(category.articles) % 2 == 0 else mod.id
-            
-            tags_list = [category.name.split()[0]]  # Seed one tag per category name
+            # Author is always admin in new single-admin model
+            author_id = admin.id
+            tags_list = [category.name.split()[0]]
             
             CMSService.create_article(
                 title=art.get('title'),
                 summary=art.get('summary'),
-                content=article_content,
+                content=art.get('content'),
                 category_id=category.id,
                 tags_list=tags_list,
                 author_id=author_id,
                 image_url=art.get('img'),
                 is_published=True,
-                is_featured=(art.get('slug') in ['atlantis', 'chernobyl', 'black-holes']), # Featured articles
+                is_featured=(art.get('slug') in ['atlantis', 'chernobyl', 'black-holes']),
                 references_data=ref_data
             )
             
+        print("Seeding Communities...")
+        communities_data = [
+            {'name': 'History', 'slug': 'history', 'description': 'Discuss ancient records, historical milestones, and humanity\'s lineage.', 'icon': 'fa-monument'},
+            {'name': 'Mythology', 'slug': 'mythology', 'description': 'Debate ancient legends, cryptids, folklore, and mythic civilizations.', 'icon': 'fa-dragon'},
+            {'name': 'Disasters', 'slug': 'disasters', 'description': 'Revisit historical cataclysms, fires, volcanic eruptions, and nuclear accidents.', 'icon': 'fa-burst'},
+            {'name': 'Environment', 'slug': 'environment', 'description': 'Share news and insights on Earth\'s ecosystems, climate change, and geographies.', 'icon': 'fa-leaf'},
+            {'name': 'Cosmology', 'slug': 'cosmology', 'description': 'Explore stellar horizons: black holes, astronomical anomalies, and deep space.', 'icon': 'fa-meteor'},
+            {'name': 'Archaeology', 'slug': 'archaeology', 'description': 'Discuss monuments, megaliths, ancient cities, and archaeological digs.', 'icon': 'fa-compass'}
+        ]
+        
+        communities_dict = {}
+        for comm in communities_data:
+            c = Community(name=comm['name'], slug=comm['slug'], description=comm['description'], icon=comm['icon'])
+            db.session.add(c)
+            communities_dict[comm['slug']] = c
+        db.session.commit()
+        
+        print("Seeding Mock Visitors and Discussions...")
+        v1 = AnonymousVisitor(uuid="visitor-uuid-1", display_name="Anonymous Explorer #C3A9", avatar_color="hsl(210, 70%, 45%)")
+        v2 = AnonymousVisitor(uuid="visitor-uuid-2", display_name="Anonymous Explorer #E5B2", avatar_color="hsl(120, 70%, 45%)")
+        db.session.add_all([v1, v2])
+        db.session.commit()
+        
+        # Seeding thread 1
+        disc1 = Discussion(
+            title="Did the Library of Alexandria have a sister branch?",
+            content="We know the main library in the Bruchion district was destroyed, but did the Serapeum branch survive longer? If so, what scrolls did it hold?",
+            community_id=communities_dict['history'].id,
+            visitor_uuid=None,  # Posted by Editorial / Official
+            status='published'
+        )
+        db.session.add(disc1)
+        db.session.flush()
+        
+        # Seed comment on thread 1
+        comment1 = Comment(
+            content="According to historical accounts, the Serapeum did survive the initial fire and was used as a smaller repository, but it was destroyed later in 391 AD under the decree of Theophilus.",
+            discussion_id=disc1.id,
+            parent_id=None,
+            visitor_uuid=v1.uuid
+        )
+        db.session.add(comment1)
+        
+        # Seeding thread 2
+        disc2 = Discussion(
+            title="The Mystery of 'Oumuamua's non-gravitational acceleration",
+            content="Is there a final consensus on why 'Oumuamua accelerated as it left our system? The hydrogen iceberg theory seems plausible, but what do you think?",
+            community_id=communities_dict['cosmology'].id,
+            visitor_uuid=v2.uuid,
+            status='published'
+        )
+        db.session.add(disc2)
+        db.session.flush()
+        
+        # Comment and nested reply on thread 2
+        comment2 = Comment(
+            content="The solar radiation pressure explanation is still preferred by most astrophysicists, though it requires specific physical dimensions.",
+            discussion_id=disc2.id,
+            parent_id=None,
+            visitor_uuid=None  # Posted by Editorial / Official
+        )
+        db.session.add(comment2)
+        db.session.flush()
+        
+        reply2 = Comment(
+            content="Exactly. It doesn't need to be an artificial light sail to accelerate from solar pressure, just thin and reflective.",
+            discussion_id=disc2.id,
+            parent_id=comment2.id,
+            visitor_uuid=v1.uuid
+        )
+        db.session.add(reply2)
+        
+        # Seed some votes
+        vote1 = Vote(visitor_uuid=v1.uuid, discussion_id=disc2.id, value=1)
+        vote2 = Vote(visitor_uuid=v2.uuid, discussion_id=disc1.id, value=1)
+        db.session.add_all([vote1, vote2])
+        
+        # Seed one report to show in the moderation queue
+        report1 = Report(
+            visitor_uuid=v1.uuid,
+            discussion_id=disc2.id,
+            reason="Misinformation",
+            details="Some users are claiming it was definitely aliens.",
+            status="pending"
+        )
+        db.session.add(report1)
+        
+        # Add Audit log
+        audit = AuditLog(action="System Init", details="Database initialized and seeded with mock data.")
+        db.session.add(audit)
+        
+        db.session.commit()
         print("Database seeded successfully!")
+
+if __name__ == '__main__':
+    seed_db()
 
 if __name__ == '__main__':
     seed_db()
