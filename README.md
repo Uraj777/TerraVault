@@ -22,58 +22,53 @@ It is one of the larger platform projects in the **.dot** ecosystem.
 ## 🧠 The Core Idea
 
 ```text
-Discover
-   ↓
-Read
-   ↓
-Understand
-   ↓
-Contribute
-   ↓
-Review / Revise
-   ↓
-Preserve the history
-   ↓
-Grow the knowledge base
+Discover → Read → Understand → Contribute → Review / Revise → Preserve history → Grow knowledge
 ```
 
-TerraVault is intentionally designed so that **knowledge has provenance**. An article is not just its latest version; the evolution of that article matters too.
+## 🔄 Knowledge & Revision Flow
 
-## 🏗️ Architecture
-
-```text
-Browser
-   │
-   ▼
-Flask Application
-   │
-   ├── Blueprints / Controllers
-   │
-   ├── Services
-   │     ├── Authentication
-   │     ├── Content
-   │     ├── Reading / Tracking
-   │     └── Analytics
-   │
-   └── SQLAlchemy Models
-          │
-          ▼
-   Supabase PostgreSQL
+```mermaid
+flowchart LR
+    R["Reader"] --> A["Article"]
+    A --> E["Edit / Contribution"]
+    E --> V["Validation + Permissions"]
+    V --> REV["New Revision"]
+    REV --> DB[("PostgreSQL")]
+    DB --> A
+    REV --> H["Revision History"]
+    H --> A
+    A --> ANA["Analytics"]
 ```
 
-### Project structure
+**How to read it:** an edit becomes a new revision rather than silently destroying the previous state. The stored history feeds both recovery/provenance and platform analytics.
+
+## 🏗️ Request Architecture
+
+```mermaid
+flowchart TD
+    B["Browser"] --> F["Flask Application"]
+    F --> BP["Blueprints / Controllers"]
+    BP --> S["Services"]
+    S --> M["SQLAlchemy Models"]
+    M --> DB[("Supabase PostgreSQL")]
+    S --> AUTH["Authentication"]
+    S --> TRACK["Reading / Tracking"]
+    S --> ANALYTICS["Analytics"]
+```
+
+## 🧩 Project structure
 
 ```text
 TerraVault/
 ├── run.py
 ├── app/
-│   ├── __init__.py       # Application factory
+│   ├── __init__.py
 │   ├── config.py
 │   ├── extensions.py
-│   ├── models/            # Database models
-│   ├── services/          # Business logic
-│   ├── utils/             # Slugs, reading time, TOC helpers
-│   └── blueprints/        # Modular controllers
+│   ├── models/
+│   ├── services/
+│   ├── utils/
+│   └── blueprints/
 ├── templates/
 ├── static/
 ├── migrations/
@@ -99,8 +94,6 @@ TerraVault/
 
 ## 🚀 Run Locally
 
-### Python
-
 ```bash
 git clone https://github.com/cser-utkarsh-raj/TerraVault.git
 cd TerraVault
@@ -108,11 +101,6 @@ python -m venv venv
 # Windows: venv\Scripts\activate
 # macOS/Linux: source venv/bin/activate
 pip install -r requirements.txt
-```
-
-Configure `.env` from `.env.example`, then:
-
-```bash
 flask db upgrade
 python seed.py
 python run.py
@@ -124,7 +112,7 @@ Production-style local server:
 gunicorn -b 127.0.0.1:8000 run:app
 ```
 
-### Docker
+Docker:
 
 ```bash
 docker-compose up --build
@@ -144,8 +132,6 @@ Never commit real secrets or `.env` files.
 ## 🗺️ Product Direction
 
 TerraVault began as an encyclopedia-style knowledge platform and is designed with room to grow into a broader **community knowledge network** — where people can discover topics, contribute, discuss, revise, and build durable collections of knowledge.
-
-The underlying architecture intentionally keeps content, identity, permissions, revisions, and analytics separated so the product can grow without becoming a monolith of tangled routes.
 
 > **TerraVault · Knowledge worth keeping.**
 >
